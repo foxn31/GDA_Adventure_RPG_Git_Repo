@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour {
 
 
 	public float moveSpeed = 8;
-	public float turnTime = 20;
+	public float gravity = -15;
 
 	float angle;
 	float currentSpeed;
@@ -14,35 +14,70 @@ public class PlayerController : MonoBehaviour {
 	float smoothedTurnVelocity;
 	float smoothedTurnTime = 0.1f;
 	float smoothedSpeedTime = 0.1f;
+	float velocityY;
+	float jumpHeight = 1;
 
-	//Rigidbody rigidBody;
+	bool movementDisabled;
+
 	Transform cameraTransform;
+	CharacterController controller;
 
 	// Use this for initialization
 	void Start () {
-		//rigidBody = GetComponent<Rigidbody> ();
 		cameraTransform = Camera.main.transform;
+		controller = GetComponent<CharacterController> ();
 	}
 
 	// Update is called once per frame
 	void Update () {
+
 		Vector3 input = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
 		Vector3 inputDirection = input.normalized;
 
-		if (inputDirection != Vector3.zero) {
-			float targetAngle = Mathf.Atan2 (inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+		if (!movementDisabled) {
+			Move (inputDirection);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			velocityY = 0;
+			Jump();
+		}
+			
+	}
+
+	//update for physics per set frame
+	void FixedUpdate() {
+		
+	}
+
+	void Jump() {
+		if (controller.isGrounded) {
+			float jumpVelocity = Mathf.Sqrt (-2 * gravity * jumpHeight);
+			velocityY = jumpVelocity;
+		}
+	}
+
+	void Move(Vector3 inputDir) {
+		
+
+		if (inputDir != Vector3.zero) {
+			float targetAngle = Mathf.Atan2 (inputDir.x, inputDir.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
 			transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle (transform.eulerAngles.y, targetAngle, ref smoothedTurnVelocity, smoothedTurnTime);
 		}
 
-		currentSpeed = Mathf.SmoothDamp (currentSpeed, inputDirection.magnitude * moveSpeed, ref smoothedVelocity, smoothedSpeedTime);
+		currentSpeed = Mathf.SmoothDamp (currentSpeed, inputDir.magnitude * moveSpeed, ref smoothedVelocity, smoothedSpeedTime);
 
-		transform.Translate (transform.forward * currentSpeed * Time.deltaTime, Space.World);
-	}
+		if (!controller.isGrounded) {
+			velocityY += Time.deltaTime * gravity;
+		}
 
-	void FixedUpdate() {
-		//rigidBody.MovePosition ( transform.forward + velocity * moveSpeed * Time.deltaTime);
-		//rigidBody.MoveRotation ( Quaternion.Euler (Vector3.up * angle));
-		//rigidBody.transform.Translate (transform.forward * velocity * moveSpeed * Time.deltaTime);
+		Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
+
+		controller.Move (velocity * Time.deltaTime);
+
+		if (controller.isGrounded) {
+			velocityY += 0;
+		}
 	}
 
 }
