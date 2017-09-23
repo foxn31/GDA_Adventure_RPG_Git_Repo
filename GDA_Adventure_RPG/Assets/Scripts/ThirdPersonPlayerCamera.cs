@@ -7,17 +7,12 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 	public Transform target;
 
 	public float mouseSensitivity = 8;
+	public float rotationSmoothTime = .1f;
+	public float zoomSpeed = 5;
+	public float camZoom;
 
-	float rotationSmoothTime = .1f;
-	float zoomSmoothTime = .2f;
-	float zoomSpeed = 5;
-	float camZoom;
-	float camVerticalOffset = 2;
 	float pitch;
 	float yaw;
-
-	float zoomVelocity;
-	float currentZoom;
 
 	public bool lockedCursor;
 
@@ -55,15 +50,9 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 
 		camZoom -= Input.GetAxis ("Mouse ScrollWheel") * zoomSpeed;
 		camZoom = Mathf.Clamp (camZoom, zoomMinMax.x, zoomMinMax.y);
-		currentZoom = Mathf.SmoothDamp (currentZoom, camZoom, ref zoomVelocity, zoomSmoothTime);
 
 		transform.eulerAngles = currentRotation;
-
-		//smoother zoom but not full up-close
-		//transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom / zoomMinMax.y));
-
-		//less smooth but full up-close
-		transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom - camVerticalOffset));
+		transform.position = target.position - transform.forward * camZoom;
 	}
 
 	void changeCursorVisibilty () {
