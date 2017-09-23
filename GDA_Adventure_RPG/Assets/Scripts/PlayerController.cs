@@ -6,12 +6,12 @@ public class PlayerController : MonoBehaviour {
 
 
 	public float moveSpeed = 8;
-	public float gravity = -12;
+	public float gravity = -15;
 
 	float angle;
 	float currentSpeed;
-	float smoothedTurnVelocity;
 	float smoothedVelocity;
+	float smoothedTurnVelocity;
 	float smoothedTurnTime = 0.1f;
 	float smoothedSpeedTime = 0.1f;
 	float velocityY;
@@ -26,10 +26,6 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		cameraTransform = Camera.main.transform;
 		controller = GetComponent<CharacterController> ();
-	}
-
-	bool onGround () {
-		return Physics.Raycast (transform.position, Vector3.down, 1.05f);
 	}
 
 	// Update is called once per frame
@@ -49,6 +45,11 @@ public class PlayerController : MonoBehaviour {
 			
 	}
 
+	//update for physics per set frame
+	void FixedUpdate() {
+		
+	}
+
 	void Jump() {
 		if (controller.isGrounded) {
 			float jumpVelocity = Mathf.Sqrt (-2 * gravity * jumpHeight);
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Move(Vector3 inputDir) {
+		
 
 		if (inputDir != Vector3.zero) {
 			float targetAngle = Mathf.Atan2 (inputDir.x, inputDir.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
@@ -77,8 +79,6 @@ public class PlayerController : MonoBehaviour {
 			velocityY += 0;
 		}
 	}
-
-
 
 }
 
