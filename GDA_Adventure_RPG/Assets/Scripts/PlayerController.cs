@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-
-	public float moveSpeed = 8;
-	public float gravity = -12;
-
+	float moveSpeed = 8;
+	float gravity = -15;
 	float angle;
 	float currentSpeed;
 	float smoothedTurnVelocity;
@@ -22,8 +20,8 @@ public class PlayerController : MonoBehaviour {
 	Transform cameraTransform;
 	CharacterController controller;
 
-	// Use this for initialization
 	void Start () {
+		movementDisabled = false;
 		cameraTransform = Camera.main.transform;
 		controller = GetComponent<CharacterController> ();
 	}
@@ -32,7 +30,6 @@ public class PlayerController : MonoBehaviour {
 		return Physics.Raycast (transform.position, Vector3.down, 1.05f);
 	}
 
-	// Update is called once per frame
 	void Update () {
 
 		Vector3 input = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
@@ -77,8 +74,18 @@ public class PlayerController : MonoBehaviour {
 			velocityY += 0;
 		}
 	}
+		
+	public void DisableMove() {
+		if (movementDisabled == false) {
+			movementDisabled = true;
+		}
+	}
 
-
+	public void EnableMove() {
+		if (movementDisabled == true) {
+			movementDisabled = false;
+		}
+	}
 
 }
 
