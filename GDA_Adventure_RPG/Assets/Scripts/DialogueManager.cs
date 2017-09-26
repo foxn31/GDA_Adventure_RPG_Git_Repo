@@ -1,20 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
+
+	public Text nameText;
+	public Text dialogueText;
+
+	public GameObject dialogueUI;
 
 	private Queue<string> sentences;
 
 	void Start () {
 		sentences = new Queue<string> ();
+		dialogueUI.SetActive (false);
 	}
 
 	public void StartDialogue(Dialogue dialogue)
 	{
 		FindObjectOfType<PlayerController> ().DisableMove ();
 
-		Debug.Log ("Starting conversation with" + dialogue.name);
+		dialogueUI.SetActive (true);
+
+		nameText.text = dialogue.name;
 
 		sentences.Clear ();
 
@@ -32,11 +41,20 @@ public class DialogueManager : MonoBehaviour {
 		}
 
 		string sentence = sentences.Dequeue ();
-		Debug.Log (sentence);
+		StopAllCoroutines();
+		StartCoroutine (TypeSentence (sentence));
+	}
+
+	IEnumerator TypeSentence (string sentence) {
+		dialogueText.text = "";
+		foreach (char letter in sentence.ToCharArray()) {
+			dialogueText.text += letter;
+			yield return null;
+		}
 	}
 
 	void EndDialogue() {
-		Debug.Log ("End of conversation");
+		dialogueUI.SetActive (false);
 		FindObjectOfType<PlayerController> ().EnableMove ();
 	}
 

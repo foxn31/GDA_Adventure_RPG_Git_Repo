@@ -6,6 +6,9 @@ public class NPCScript : MonoBehaviour {
 
 	Transform player;
 
+	public static event System.Action ShowTalkPrompt;
+	public static event System.Action HideTalkPrompt;
+
 	public Dialogue dialogue;
 	public float interactionRadius = 2;
 
@@ -19,11 +22,18 @@ public class NPCScript : MonoBehaviour {
 	void Update () {
 		float distance = Vector3.Distance (player.position, transform.position);
 
+		if (distance <= interactionRadius && sentenceIncrement == 0) {
+			ShowTalkPrompt();
+		}
+		if (distance >= interactionRadius) {
+			HideTalkPrompt();
+		}
 		if (distance <= interactionRadius && Input.GetKeyDown(KeyCode.F) && sentenceIncrement == 0) {
 			this.TriggerDialogue ();
 			timeAtLastDiologue = Time.time;
+			HideTalkPrompt ();
 		}
-		if (Input.GetKeyDown(KeyCode.F) && Time.time >= (timeAtLastDiologue + 1)) {
+		if (Input.GetKeyDown(KeyCode.F) && Time.time >= (timeAtLastDiologue + .5)) {
 			this.TriggerNextDialogue ();
 			timeAtLastDiologue = Time.time;
 		}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThirdPersonPlayerCamera : MonoBehaviour {
 
-	public Transform target;
+	public Transform target; 
 
 	public float mouseSensitivity = 8;
 
@@ -30,6 +30,7 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		target = GameObject.FindGameObjectWithTag("Player").transform;
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
 		lockedCursor = true;
@@ -78,4 +79,5 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 			lockedCursor = false;
 		}
 	}
+		
 }
