@@ -10,7 +10,7 @@ public class NPCScript : MonoBehaviour {
 	public static event System.Action HideTalkPrompt;
 
 	public Dialogue dialogue;
-	public float interactionRadius = 2;
+	public float interactionRadius = 3;
 
 	int sentenceIncrement = 0;
 	float timeAtLastDiologue;
@@ -23,18 +23,17 @@ public class NPCScript : MonoBehaviour {
 		float distance = Vector3.Distance (player.position, transform.position);
 
 		if (distance <= interactionRadius && sentenceIncrement == 0) {
-			ShowTalkPrompt();
-		}
-		if (distance >= interactionRadius) {
-			HideTalkPrompt();
+			ShowTalkPrompt ();
+		} else {
+			HideTalkPrompt ();
 		}
 		if (distance <= interactionRadius && Input.GetKeyDown(KeyCode.F) && sentenceIncrement == 0) {
-			this.TriggerDialogue ();
+			TriggerDialogue ();
 			timeAtLastDiologue = Time.time;
 			HideTalkPrompt ();
 		}
-		if (Input.GetKeyDown(KeyCode.F) && Time.time >= (timeAtLastDiologue + .5)) {
-			this.TriggerNextDialogue ();
+		if (distance <= interactionRadius && Input.GetKeyDown(KeyCode.F) && Time.time >= (timeAtLastDiologue + .5)) {
+			TriggerNextDialogue ();
 			timeAtLastDiologue = Time.time;
 		}
 	}
