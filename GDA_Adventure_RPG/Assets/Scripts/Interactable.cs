@@ -1,38 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Interactable : MonoBehaviour {
 
 	public Transform player;
-
 	public Transform interactTransform;
 
 	public float interactRadius = 3f;
 
+	bool hasInteracted;
 	float distance;
 
-	bool hasInteracted;
-	bool isInteracting;
-
-	void Start () {
-		hasInteracted = false;
-		isInteracting = false;
-	}
-
 	public virtual void Interact() {
-
+		Debug.Log ("Interacting");
 	}
+
+	//public virtual void showPrompt() {
+	//	Debug.Log ("Showing prompt");
+	//}
+
+	//public virtual void hidePrompt() {
+	//	Debug.Log ("Hiding prompt");
+	//}
 	
-	void Update () {
+	public virtual void Update () {
 		distance = Vector3.Distance (player.position, transform.position);
-		Debug.Log (distance);
 
 		if (playerIsInRange() && Input.GetKeyDown(KeyCode.F)) {
-			isInteracting = true;
 			Interact ();
-			isInteracting = false;
-			hasInteracted = true;
 		}
 
 	}

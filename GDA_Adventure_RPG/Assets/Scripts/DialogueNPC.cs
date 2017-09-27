@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DialogueNPC : Interactable {
 
 	public static event System.Action ShowTalkPrompt;
 	public static event System.Action HideTalkPrompt;
+
+	bool promptVisible = true;
 
 	public Dialogue dialogue;
 
@@ -16,7 +16,6 @@ public class DialogueNPC : Interactable {
 		
 	}
 		
-	//*************************************
 	public override void Interact() {
 		
 		base.Interact ();
@@ -24,21 +23,24 @@ public class DialogueNPC : Interactable {
 		if(sentenceIncrement == 0) {
 			TriggerDialogue ();
 			timeAtLastDiologue = Time.time;
-			HideTalkPrompt ();
+			hidePrompt();
 		}
-		if (Time.time >= (timeAtLastDiologue + .5)) {
+		if (Time.time >= (timeAtLastDiologue + .1)) {
 			TriggerNextDialogue ();
 			timeAtLastDiologue = Time.time;
 		}
 
 	}
-	//*************************************	
 
-	void Update () {
-		if (playerIsInRange() == true && sentenceIncrement == 0) {
-			ShowTalkPrompt ();
+	public override void Update () {
+		base.Update ();
+	}
+
+	void LateUpdate() {
+		if (playerIsInRange() && sentenceIncrement == 0) {
+			showPrompt ();
 		} else {
-			HideTalkPrompt ();
+			hidePrompt ();
 		}
 	}
 
@@ -58,4 +60,18 @@ public class DialogueNPC : Interactable {
 		}
 	}
 		
+	void showPrompt() {
+		if (!promptVisible && ShowTalkPrompt != null) {
+			ShowTalkPrompt ();
+			promptVisible = true;
+		}
+	}
+
+	void hidePrompt() {
+		if (promptVisible && HideTalkPrompt != null) {
+			HideTalkPrompt ();
+			promptVisible = false;
+		}
+	}
+
 }
