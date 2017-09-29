@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour {
 
 	bool movementDisabled;
 
+	Vector3 inputDirection;
+
 	Transform cameraTransform;
 	CharacterController controller;
 
@@ -32,12 +34,14 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () {
 
-		Vector3 input = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
-		Vector3 inputDirection = input.normalized;
-
 		if (!movementDisabled) {
-			Move (inputDirection);
+			Vector3 input = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
+			inputDirection = input.normalized;
+			//Move (inputDirection);	
 		}
+
+		Move (inputDirection);	
+
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			velocityY = 0;

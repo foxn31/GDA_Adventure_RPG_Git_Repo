@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 942932615}
   - component: {fileID: 942932614}
   m_Layer: 5
-  m_Name: DialogueCanvas
+  m_Name: DialogueCanvasUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1814,7 +1814,7 @@ GameObject:
   - component: {fileID: 1866838351}
   - component: {fileID: 1866838355}
   m_Layer: 5
-  m_Name: UI
+  m_Name: UserInterface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
