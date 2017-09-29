@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 33745660668283464}
   - component: {fileID: 23459823118134554}
   m_Layer: 0
-  m_Name: Tree
+  m_Name: foxn31_Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
