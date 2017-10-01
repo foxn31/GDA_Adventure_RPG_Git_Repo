@@ -37,7 +37,8 @@ public class PlayerController : MonoBehaviour {
 		if (!movementDisabled) {
 			Vector3 input = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
 			inputDirection = input.normalized;
-			//Move (inputDirection);	
+		} else if (movementDisabled) {
+			inputDirection = Vector3.zero;
 		}
 
 		Move (inputDirection);	
