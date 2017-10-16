@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	float moveSpeed = 8;
+	public float walkSpeed = 3;
+	public float runSpeed = 8;
+
+	float animatorSpeedPercent;
+	float speed;
 	float gravity = -15;
 	float angle;
 	float currentSpeed;
@@ -15,17 +19,20 @@ public class PlayerController : MonoBehaviour {
 	float velocityY;
 	float jumpHeight = 1;
 
+	bool running;
 	bool movementDisabled;
 
 	Vector3 inputDirection;
 
 	Transform cameraTransform;
 	CharacterController controller;
+	Animator animator;
 
 	void Start () {
 		movementDisabled = false;
 		cameraTransform = Camera.main.transform;
 		controller = GetComponent<CharacterController> ();
+		animator = GetComponent<Animator> ();
 	}
 
 	bool onGround () {
@@ -64,7 +71,13 @@ public class PlayerController : MonoBehaviour {
 			transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle (transform.eulerAngles.y, targetAngle, ref smoothedTurnVelocity, smoothedTurnTime);
 		}
 
-		currentSpeed = Mathf.SmoothDamp (currentSpeed, inputDir.magnitude * moveSpeed, ref smoothedVelocity, smoothedSpeedTime);
+		running = Input.GetKey (KeyCode.LeftShift);
+		speed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;
+
+		currentSpeed = Mathf.SmoothDamp (currentSpeed, speed, ref smoothedVelocity, smoothedSpeedTime);
+
+		animatorSpeedPercent = ((running) ? 1 : .5f) * inputDir.magnitude;
+		animator.SetFloat ("speedPercent", animatorSpeedPercent);
 
 		if (!controller.isGrounded) {
 			velocityY += Time.deltaTime * gravity;

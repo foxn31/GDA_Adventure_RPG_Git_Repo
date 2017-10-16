@@ -10,6 +10,10 @@ public class Interactable : MonoBehaviour {
 	bool hasInteracted;
 	float distance;
 
+	void Start() {
+
+	}
+
 	public virtual void Interact() {
 		Debug.Log ("Interacting");
 	}
