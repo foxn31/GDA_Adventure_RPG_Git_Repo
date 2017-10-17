@@ -13,7 +13,8 @@ public class DialogueNPC : Interactable {
 	float timeAtLastDiologue;
 
 	void Start () {
-		
+		player = GameObject.FindGameObjectWithTag("Player").transform;
+		DialogueManager.EndAllDialogue += endThisDialogue;
 	}
 		
 	public override void Interact() {
@@ -74,4 +75,7 @@ public class DialogueNPC : Interactable {
 		}
 	}
 
+	void endThisDialogue () {
+		isInteracting = false;
+	}
 }

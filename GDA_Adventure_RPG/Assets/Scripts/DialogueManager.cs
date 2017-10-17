@@ -12,6 +12,8 @@ public class DialogueManager : MonoBehaviour {
 
 	private Queue<string> sentences;
 
+	public static event System.Action EndAllDialogue;
+
 	void Start () {
 		sentences = new Queue<string> ();
 		dialogueUI.SetActive (false);
@@ -55,6 +57,9 @@ public class DialogueManager : MonoBehaviour {
 	void EndDialogue() {
 		dialogueUI.SetActive (false);
 		FindObjectOfType<PlayerController> ().EnableMove ();
+		if (EndAllDialogue != null) {
+			EndAllDialogue ();
+		}
 	}
 
 
