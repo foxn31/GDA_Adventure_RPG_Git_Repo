@@ -1,67 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Item : Interactable {
+[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+public class Item : ScriptableObject {
 
-	public static event System.Action ShowPickupPrompt;
-	public static event System.Action HidePickupPrompt;
+	new public string name = "New Item";
+	public Sprite icon = null;
+	public bool isDefaultItem = false;
 
-	public bool isHDItem = false;
-
-	bool promptVisible = true;
-
-	void Start () {
-		if (isHDItem) {
-			transform.Rotate ( 0, 0, 30);
-		}
-		player = GameObject.FindGameObjectWithTag("Player").transform;
-
-	}
-
-	public override void Interact() {
-		base.Interact ();
-		PickUp ();
-	}
-
-	public override void Update () {
-		base.Update ();
-
-		if(isHDItem) {
-			animateHDItem ();
-		}
-	}
-
-	void LateUpdate() {
-		if (playerIsInRange()) {
-			showPrompt ();
-		} else {
-			hidePrompt ();
-		}
-	}
-
-	void PickUp() {
-		
-		Debug.Log ("Picking up item");
-
-		hidePrompt ();
-		Destroy (gameObject);		
-
-	}
-
-	void showPrompt() {
-		if (!promptVisible && ShowPickupPrompt != null) {
-			ShowPickupPrompt ();
-			promptVisible = true;
-		}
-	}
-
-	void hidePrompt() {
-		if (promptVisible && HidePickupPrompt != null) {
-			HidePickupPrompt ();
-			promptVisible = false;
-		}
-	}
-
-	void animateHDItem () {
-		transform.Rotate (Vector3.up);
-	}
 }
