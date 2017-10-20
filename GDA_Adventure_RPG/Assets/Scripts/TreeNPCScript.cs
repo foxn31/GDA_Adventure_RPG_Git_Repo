@@ -13,15 +13,6 @@ public class TreeNPCScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if ((transform.position.x > -4) && (transform.position.z>-5)) {
-			transform.Translate (Vector3.left * speed * Time.deltaTime);
-		}
-		else if ((transform.position.z > -4) && transform.position.z 
-		transform.Translate (Vector3.back * speed * Time.deltaTime);
-		transform.Translate (Vector3.right * speed * Time.deltaTime);
-		transform.Translate (Vector3.forward * speed * Time.deltaTime);
 
-
-		
 	}
 }
