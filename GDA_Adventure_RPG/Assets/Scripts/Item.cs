@@ -13,6 +13,8 @@ public class Item : Interactable {
 		if (isHDItem) {
 			transform.Rotate ( 0, 0, 30);
 		}
+		player = GameObject.FindGameObjectWithTag("Player").transform;
+
 	}
 
 	public override void Interact() {

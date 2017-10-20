@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	float moveSpeed = 8;
+	public float walkSpeed = 3;
+	public float runSpeed = 8;
+
+	float animatorSpeedPercent;
+	float speed;
 	float gravity = -15;
 	float angle;
 	float currentSpeed;
@@ -15,17 +19,23 @@ public class PlayerController : MonoBehaviour {
 	float velocityY;
 	float jumpHeight = 1;
 
+	[Range(0,1)]
+	public float airControlPercent;
+
+	bool running;
 	bool movementDisabled;
 
 	Vector3 inputDirection;
 
 	Transform cameraTransform;
 	CharacterController controller;
+	Animator animator;
 
 	void Start () {
 		movementDisabled = false;
 		cameraTransform = Camera.main.transform;
 		controller = GetComponent<CharacterController> ();
+		animator = GetComponentInChildren<Animator> ();
 	}
 
 	bool onGround () {
@@ -41,7 +51,7 @@ public class PlayerController : MonoBehaviour {
 			inputDirection = Vector3.zero;
 		}
 
-		Move (inputDirection);	
+		Move (inputDirection, running);	
 
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
@@ -49,6 +59,8 @@ public class PlayerController : MonoBehaviour {
 			Jump();
 		}
 			
+		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.5f);
+		animator.SetFloat ("speedPercent", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
 	}
 
 	void Jump() {
@@ -58,13 +70,16 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void Move(Vector3 inputDir) {
+	void Move(Vector3 inputDir, bool running) {
 		if (inputDir != Vector3.zero) {
 			float targetAngle = Mathf.Atan2 (inputDir.x, inputDir.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-			transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle (transform.eulerAngles.y, targetAngle, ref smoothedTurnVelocity, smoothedTurnTime);
+			transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle (transform.eulerAngles.y, targetAngle, ref smoothedTurnVelocity, GetModififedSmoothTime (smoothedTurnTime));
 		}
 
-		currentSpeed = Mathf.SmoothDamp (currentSpeed, inputDir.magnitude * moveSpeed, ref smoothedVelocity, smoothedSpeedTime);
+		running = Input.GetKey (KeyCode.LeftShift);
+		speed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;
+
+		currentSpeed = Mathf.SmoothDamp (currentSpeed, speed, ref smoothedVelocity, GetModififedSmoothTime (smoothedSpeedTime));
 
 		if (!controller.isGrounded) {
 			velocityY += Time.deltaTime * gravity;
@@ -77,6 +92,7 @@ public class PlayerController : MonoBehaviour {
 		if (controller.isGrounded) {
 			velocityY += 0;
 		}
+
 	}
 		
 	public void DisableMove() {
@@ -89,6 +105,17 @@ public class PlayerController : MonoBehaviour {
 		if (movementDisabled == true) {
 			movementDisabled = false;
 		}
+	}
+
+	float GetModififedSmoothTime(float smoothTime) {
+		if (controller.isGrounded) {
+			return smoothTime;
+		}
+
+		if (airControlPercent == 0) {
+			return float.MaxValue;
+		}
+		return smoothTime / airControlPercent;
 	}
 
 }

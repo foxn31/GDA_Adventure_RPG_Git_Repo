@@ -8,7 +8,12 @@ public class Interactable : MonoBehaviour {
 	public float interactRadius = 3f;
 
 	bool hasInteracted;
+	public bool isInteracting = false;
 	float distance;
+
+	void Start() {
+		player = GameObject.FindGameObjectWithTag("Player").transform;
+	}
 
 	public virtual void Interact() {
 		Debug.Log ("Interacting");
@@ -25,7 +30,8 @@ public class Interactable : MonoBehaviour {
 	public virtual void Update () {
 		distance = Vector3.Distance (player.position, transform.position);
 
-		if (playerIsInRange() && Input.GetKeyDown(KeyCode.F)) {
+		if ((playerIsInRange() && Input.GetKeyDown(KeyCode.F)) || (isInteracting == true && Input.GetKeyDown(KeyCode.F))) {
+			isInteracting = true;
 			Interact ();
 		}
 

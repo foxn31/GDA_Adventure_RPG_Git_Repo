@@ -21,7 +21,7 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 
 	public bool lockedCursor;
 
-	Vector2 zoomMinMax = new Vector2 (2, 8);
+	Vector2 zoomMinMax = new Vector2 (2, 5);
 	Vector2 pitchMinMax = new Vector2 (-50, 80);
 
 	Vector3 rotationSmoothVelocity;
@@ -61,10 +61,10 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 		transform.eulerAngles = currentRotation;
 
 		//smoother zoom but not full up-close
-		//transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom / zoomMinMax.y));
+		transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom / zoomMinMax.y));
 
 		//less smooth but full up-close
-		transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom - camVerticalOffset));
+		//transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom - camVerticalOffset));
 	}
 
 	void changeCursorVisibilty () {
