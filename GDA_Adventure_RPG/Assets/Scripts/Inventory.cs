@@ -4,44 +4,50 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
-	public static Inventory instance;
+    string[] items = new string[0];
+    void Start()
+    {
+    }
 
-	void Awake() {
-		if (instance != null) {
-			Debug.LogWarning ("More than one instance of Inventory found");
-		}
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            showInventory();
+        }
+    }
 
-		instance = this;
-	}
+    public void addItem(string newItem)
+    {
+        string[] newItems = new string[items.Length + 1];
 
-	public delegate void OnItemChanged ();
-	public OnItemChanged onItemChangedCallback;
+        for (int i = 0; i < items.Length; i++)
+        {
+            newItems[i] = items[i];
+        }
 
-	public int invSpace = 20;
+        newItems[newItems.Length - 1] = newItem;
+        items = newItems;
+    }
 
-	public List<Item> items = new List<Item>();
+    void showInventory()
+    {
+        if (items.Length == 0)
+        {
+            Debug.Log("You have no items.");
+            return;
+        }
 
-	public bool Add (Item item) {
+        string itemString = "";
 
-		if (!item.isDefaultItem) {
-			
-			if (items.Count >= invSpace) {
-				Debug.Log ("Not enough space in inventory");
-				return false;
-			}
+        for (int i = 0; i < items.Length - 1; i++)
+        {
+            itemString += items[i] + " ";
+        }
 
-			items.Add (item);
+        itemString += items[items.Length - 1];
 
-			if (onItemChangedCallback != null) {
-				onItemChangedCallback.Invoke ();
-			}
-		}
-
-		return true;
-	}
-
-	public void Remove (Item item) {
-		items.Remove(item);
-	}
-
+        Debug.Log("You have: " + itemString);
+    }
 }

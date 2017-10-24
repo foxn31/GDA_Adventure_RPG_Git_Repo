@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
 public class ItemPickup: Interactable {
+    Inventory inv;
 
-	public static event System.Action ShowPickupPrompt;
+    public static event System.Action ShowPickupPrompt;
 	public static event System.Action HidePickupPrompt;
 
 	public bool isHDItem = false;
@@ -16,7 +17,7 @@ public class ItemPickup: Interactable {
 			transform.Rotate ( 0, 0, 30);
 		}
 		player = GameObject.FindGameObjectWithTag("Player").transform;
-
+        inv = player.GetComponent<Inventory>();
 	}
 
 	public override void Interact() {
@@ -27,14 +28,11 @@ public class ItemPickup: Interactable {
 	void PickUp() {
 
 		Debug.Log ("Picking up " + item.name);
+        inv.addItem(item.name);
 
 		hidePrompt ();
 
-		bool wasPickedUp = Inventory.instance.Add (item);
-
-		if (wasPickedUp) {
-			Destroy (gameObject);
-		}
+        Destroy(gameObject);
 
 	}
 
