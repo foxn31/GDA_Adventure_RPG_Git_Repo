@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
 		Move (inputDirection, running);	
 
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.Space) && controller.isGrounded) {
 			velocityY = 0;
 			Jump();
 		}
