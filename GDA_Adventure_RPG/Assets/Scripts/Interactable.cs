@@ -18,7 +18,15 @@ public class Interactable : MonoBehaviour {
 	public virtual void Interact() {
 		Debug.Log ("Interacting");
 	}
-		
+
+	//public virtual void showPrompt() {
+	//	Debug.Log ("Showing prompt");
+	//}
+
+	//public virtual void hidePrompt() {
+	//	Debug.Log ("Hiding prompt");
+	//}
+	
 	public virtual void Update () {
 		distance = Vector3.Distance (player.position, transform.position);
 
