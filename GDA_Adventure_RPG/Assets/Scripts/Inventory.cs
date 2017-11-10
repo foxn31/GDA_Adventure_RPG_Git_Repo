@@ -24,7 +24,11 @@ public class Inventory : MonoBehaviour {
 	public bool Add (Item item) {
 
 		if (!item.isDefaultItem) {
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> parent of bf1cde1... Added Inventory
 			if (items.Count >= invSpace) {
 				Debug.Log ("Not enough space in inventory");
 				return false;
@@ -44,4 +48,8 @@ public class Inventory : MonoBehaviour {
 		items.Remove(item);
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of bf1cde1... Added Inventory
