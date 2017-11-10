@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Project_Shutdown : MonoBehaviour {
 
+    
     float timeElapsed;
 
 	void Start () {
@@ -17,4 +18,5 @@ public class Project_Shutdown : MonoBehaviour {
             UnityEditor.EditorApplication.isPlaying = false;
         }
 	}
+    
 }
