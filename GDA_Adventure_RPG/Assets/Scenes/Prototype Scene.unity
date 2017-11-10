@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -939,10 +939,14 @@ RectTransform:
   m_GameObject: {fileID: 249802568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LocalPosition: {x: 515.39874, y: -109.999985, z: 0}
 =======
   m_LocalPosition: {x: 0, y: 0, z: 0}
 >>>>>>> 58f9508870714083be6f4dfee0f63511bad4fb84
+=======
+  m_LocalPosition: {x: 311.22137, y: -109.999985, z: 0}
+>>>>>>> parent of 5e7db13... Added in Stat Scripts
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1691795689}
@@ -3098,12 +3102,17 @@ RectTransform:
   m_GameObject: {fileID: 942932613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LocalPosition: {x: 405, y: 163, z: 0}
   m_LocalScale: {x: 0.54333335, y: 0.54333335, z: 0.54333335}
 =======
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
 >>>>>>> 58f9508870714083be6f4dfee0f63511bad4fb84
+=======
+  m_LocalPosition: {x: 354.5, y: 196.5, z: 0}
+  m_LocalScale: {x: 0.655, y: 0.655, z: 0.655}
+>>>>>>> parent of 5e7db13... Added in Stat Scripts
   m_Children:
   - {fileID: 1794398603}
   m_Father: {fileID: 0}
@@ -6493,6 +6502,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1866838350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 405, y: 163, z: 0}
   m_LocalScale: {x: 0.54333335, y: 0.54333335, z: 0.54333335}
 =======
@@ -6504,6 +6514,10 @@ Transform:
   m_LocalPosition: {x: 0.0007930564, y: 0.0032683755, z: -0.0000151419035}
   m_LocalScale: {x: 1.0000002, y: 0.99999934, z: 0.9999994}
 >>>>>>> 58f9508870714083be6f4dfee0f63511bad4fb84
+=======
+  m_LocalPosition: {x: 354.5, y: 196.5, z: 0}
+  m_LocalScale: {x: 0.655, y: 0.655, z: 0.655}
+>>>>>>> parent of 5e7db13... Added in Stat Scripts
   m_Children:
   - {fileID: 1411868662}
   m_Father: {fileID: 1213841941}
