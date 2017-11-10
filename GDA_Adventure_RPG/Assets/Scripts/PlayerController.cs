@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour {
 			Jump();
 		}
 			
-		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.6f);
+		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.8f);
 		animator.SetFloat ("speedPercent", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
 	}
 
