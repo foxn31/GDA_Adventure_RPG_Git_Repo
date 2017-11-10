@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour {
 	public float walkSpeed = 3;
 	public float runSpeed = 8;
 
+	public static event System.Action ShowInventory;
+	public static event System.Action HideInventory;
+	int InvToggle = 2;
+
 	float animatorSpeedPercent;
 	float speed;
 	float gravity = -15;
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 
 	bool running;
 	bool movementDisabled;
+	bool isInventoryShowing;
 
 	Vector3 inputDirection;
 
@@ -57,12 +62,26 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && controller.isGrounded) {
 			velocityY = 0;
 			Jump();
+
+		}
+
+		if (Input.GetKeyDown (KeyCode.T)) {
+			if (InvToggle % 2 == 1) {
+				ShowInventory();
+				InvToggle++;
+				Debug.Log ("showingInv");
+			} 
+			else {
+				HideInventory();
+				InvToggle++;
+				Debug.Log ("hidingInv");
+			}
 		}
 			
-		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.8f);
+		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.6f);
 		animator.SetFloat ("speedPercent", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
 	}
-
+		
 	void Jump() {
 		if (controller.isGrounded) {
 			float jumpVelocity = Mathf.Sqrt (-2 * gravity * jumpHeight);

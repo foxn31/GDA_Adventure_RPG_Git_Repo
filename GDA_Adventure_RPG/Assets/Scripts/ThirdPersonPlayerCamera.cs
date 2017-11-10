@@ -12,7 +12,7 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 	float zoomSmoothTime = .2f;
 	float zoomSpeed = 5;
 	float camZoom;
-	float camVerticalOffset = 1.5f;
+	float camVerticalOffset = 2;
 	float pitch;
 	float yaw;
 
@@ -21,7 +21,7 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 
 	public bool lockedCursor;
 
-	Vector2 zoomMinMax = new Vector2 (2, 4);
+	Vector2 zoomMinMax = new Vector2 (2, 5);
 	Vector2 pitchMinMax = new Vector2 (-50, 80);
 
 	Vector3 rotationSmoothVelocity;
