@@ -16,7 +16,6 @@ public class GameUI : MonoBehaviour {
 		DialogueNPC.HideTalkPrompt += hideTalkPrompt;
 		ItemPickup.ShowPickupPrompt += showPickupPrompt;
 		ItemPickup.HidePickupPrompt += hidePickupPrompt;
-
 		PlayerController.ShowInventory += showInventory;
 		PlayerController.HideInventory += hideInventory;
 	}
