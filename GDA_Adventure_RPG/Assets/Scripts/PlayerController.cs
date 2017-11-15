@@ -7,10 +7,6 @@ public class PlayerController : MonoBehaviour {
 	public float walkSpeed = 3;
 	public float runSpeed = 8;
 
-	public static event System.Action ShowInventory;
-	public static event System.Action HideInventory;
-	int InvToggle = 2;
-
 	float animatorSpeedPercent;
 	float speed;
 	float gravity = -15;
@@ -45,41 +41,27 @@ public class PlayerController : MonoBehaviour {
 
 	bool onGround () {
 		return Physics.Raycast (transform.position, Vector3.down, 1.05f);
-	}
+	}	
 
 	void Update () {
 
 		if (!movementDisabled) {
 			Vector3 input = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
 			inputDirection = input.normalized;
+
+			if (Input.GetKeyDown (KeyCode.Space) && controller.isGrounded) {
+				velocityY = 0;
+				Jump();
+			}
 		} else if (movementDisabled) {
 			inputDirection = Vector3.zero;
 		}
 
 		Move (inputDirection, running);	
-
-
-		if (Input.GetKeyDown (KeyCode.Space) && controller.isGrounded) {
-			velocityY = 0;
-			Jump();
-
-		}
 			
 		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.6f);
 		animator.SetFloat ("speedPercent", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
 
-		if (Input.GetKeyDown (KeyCode.T)) {
-			if (InvToggle % 2 == 1) {
-				ShowInventory();
-				InvToggle++;
-				Debug.Log ("showingInv");
-			} 
-			else {
-				HideInventory();
-				InvToggle++;
-				Debug.Log ("hidingInv");
-			}
-		}
 	}
 		
 	void Jump () {
@@ -115,13 +97,13 @@ public class PlayerController : MonoBehaviour {
 	}
 		
 	public void DisableMove() {
-		if (movementDisabled == false) {
+		if (!movementDisabled) {
 			movementDisabled = true;
 		}
 	}
 
 	public void EnableMove() {
-		if (movementDisabled == true) {
+		if (movementDisabled) {
 			movementDisabled = false;
 		}
 	}

@@ -932,14 +932,13 @@ GameObject:
   m_Component:
   - component: {fileID: 249802569}
   - component: {fileID: 249802570}
-  - component: {fileID: 249802571}
   m_Layer: 5
   m_Name: InventoryUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &249802569
 RectTransform:
   m_ObjectHideFlags: 0
@@ -947,7 +946,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 249802568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 366.5077, y: -38.5, z: 0}
+  m_LocalPosition: {x: 370.41534, y: -38.49997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1691795689}
@@ -965,19 +964,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 249802568}
---- !u!114 &249802571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 249802568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63bfafbc52d20b343b8bd8e98ecae333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemsParent: {fileID: 1691795689}
-  inventoryUI: {fileID: 249802568}
 --- !u!1 &250351734
 GameObject:
   m_ObjectHideFlags: 0
@@ -3120,8 +3106,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 942932613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 412, y: 196.5, z: 0}
-  m_LocalScale: {x: 0.655, y: 0.655, z: 0.655}
+  m_LocalPosition: {x: 336.5, y: 159.5, z: 0}
+  m_LocalScale: {x: 0.5316667, y: 0.5316667, z: 0.5316667}
   m_Children:
   - {fileID: 1794398603}
   m_Father: {fileID: 0}
@@ -6003,7 +5989,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1794398602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000015258789, y: -144, z: 0}
+  m_LocalPosition: {x: -0.000015258789, y: -143.99997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1137924464}
@@ -6202,6 +6188,7 @@ GameObject:
   - component: {fileID: 1866838352}
   - component: {fileID: 1866838351}
   - component: {fileID: 1866838355}
+  - component: {fileID: 1866838356}
   m_Layer: 5
   m_Name: UserInterface
   m_TagString: Untagged
@@ -6273,8 +6260,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1866838350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 412, y: 196.5, z: 0}
-  m_LocalScale: {x: 0.655, y: 0.655, z: 0.655}
+  m_LocalPosition: {x: 336.5, y: 159.5, z: 0}
+  m_LocalScale: {x: 0.5316667, y: 0.5316667, z: 0.5316667}
   m_Children:
   - {fileID: 804609962}
   - {fileID: 1602437638}
@@ -6301,6 +6288,19 @@ MonoBehaviour:
   talkPrompt: {fileID: 804609961}
   pickupPrompt: {fileID: 1602437637}
   inventory: {fileID: 249802568}
+--- !u!114 &1866838356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866838350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63bfafbc52d20b343b8bd8e98ecae333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsParent: {fileID: 1691795689}
+  inventoryUI: {fileID: 249802568}
 --- !u!1 &1894861808
 GameObject:
   m_ObjectHideFlags: 0

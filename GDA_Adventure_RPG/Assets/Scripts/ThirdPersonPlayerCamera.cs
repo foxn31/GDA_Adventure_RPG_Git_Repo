@@ -19,7 +19,7 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 	float zoomVelocity;
 	float currentZoom;
 
-	public bool lockedCursor;
+	bool camRotEnabled;
 
 	Vector2 zoomMinMax = new Vector2 (2, 5);
 	Vector2 pitchMinMax = new Vector2 (-50, 80);
@@ -27,56 +27,47 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 	Vector3 rotationSmoothVelocity;
 	Vector3 currentRotation;
 
-
-	// Use this for initialization
 	void Start () {
 		target = GameObject.FindGameObjectWithTag("Player").transform;
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
-		lockedCursor = true;
 		camZoom = zoomMinMax.y;
+		camRotEnabled = true;
 	}
 
 	void Update () {
 		camZoom -= Input.GetAxis ("Mouse ScrollWheel") * zoomSpeed;
 		camZoom = Mathf.Clamp (camZoom, zoomMinMax.x, zoomMinMax.y);
-	
-		if ( Input.GetKeyDown(KeyCode.Escape) ) {
-			changeCursorVisibilty();
-		}
 	}
 
 	void LateUpdate () {
-		yaw += Input.GetAxis ("Mouse X") * mouseSensitivity;
-		pitch -= Input.GetAxis ("Mouse Y") * mouseSensitivity;
-		pitch = Mathf.Clamp (pitch, pitchMinMax.x, pitchMinMax.y);
+		//if (camEnable) {
+			if (camRotEnabled) {
+				yaw += Input.GetAxis ("Mouse X") * mouseSensitivity;
+				pitch -= Input.GetAxis ("Mouse Y") * mouseSensitivity;
+				pitch = Mathf.Clamp (pitch, pitchMinMax.x, pitchMinMax.y);
 
-		currentRotation = Vector3.SmoothDamp (currentRotation, new Vector3 (pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+				currentRotation = Vector3.SmoothDamp (currentRotation, new Vector3 (pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+			}
+				camZoom -= Input.GetAxis ("Mouse ScrollWheel") * zoomSpeed;
+				camZoom = Mathf.Clamp (camZoom, zoomMinMax.x, zoomMinMax.y);
+				currentZoom = Mathf.SmoothDamp (currentZoom, camZoom, ref zoomVelocity, zoomSmoothTime);
 
-		camZoom -= Input.GetAxis ("Mouse ScrollWheel") * zoomSpeed;
-		camZoom = Mathf.Clamp (camZoom, zoomMinMax.x, zoomMinMax.y);
-		currentZoom = Mathf.SmoothDamp (currentZoom, camZoom, ref zoomVelocity, zoomSmoothTime);
+				transform.eulerAngles = currentRotation;
 
-		transform.eulerAngles = currentRotation;
+				//smoother zoom but not full up-close
+				transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom / zoomMinMax.y));
 
-		//smoother zoom but not full up-close
-		transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom / zoomMinMax.y));
-
-		//less smooth but full up-close
-		//transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom - camVerticalOffset));
-	}
-
-	void changeCursorVisibilty () {
-		if (!lockedCursor) {
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-			lockedCursor = true;
-		}
-		else if (lockedCursor) {
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-			lockedCursor = false;
-		}
+				//less smooth but full up-close
+				//transform.position = target.position - transform.forward * camZoom + transform.up * camVerticalOffset * Mathf.Lerp (0, 1, (currentZoom - camVerticalOffset));
+		//}
 	}
 		
+	public void EnableCamRot () {
+		camRotEnabled = true;
+	}
+
+	public void DisableCamRot () {
+		camRotEnabled = false;
+	}
 }
