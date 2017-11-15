@@ -113,3 +113,5 @@ MonoBehaviour:
   isInteracting: 0
   isHDItem: 1
   item: {fileID: 11400000, guid: 955a3d667223b2040a1161cca0b25bd0, type: 2}
+  pickupSound1: {fileID: 8300000, guid: 81652031b64c342cc8dbc59c138d77c5, type: 3}
+  pickupSound2: {fileID: 8300000, guid: 6e8772b49f34d402a90016ed445d8a2f, type: 3}
