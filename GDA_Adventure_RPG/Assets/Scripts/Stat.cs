@@ -12,7 +12,9 @@ public class Stat {
 
     public int getValue()
     {
-        return baseValue;
+        int finalValue = baseValue;
+        modifiers.ForEach(x => finalValue += x);
+        return finalValue;
     }
 
     public void AddModifier(int modifier)

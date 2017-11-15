@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -122,12 +122,12 @@ Prefab:
     - target: {fileID: 224659601449383408, guid: 9468702fd6140ff4b8fbcc7fc1204126,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 336.5
+      value: 407.5
       objectReference: {fileID: 0}
     - target: {fileID: 224659601449383408, guid: 9468702fd6140ff4b8fbcc7fc1204126,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 159.5
+      value: 163
       objectReference: {fileID: 0}
     - target: {fileID: 224659601449383408, guid: 9468702fd6140ff4b8fbcc7fc1204126,
         type: 2}
@@ -413,12 +413,12 @@ Prefab:
     - target: {fileID: 224980581589053142, guid: 1de00c2902ed3844a9a1b5626abef8ee,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 336.5
+      value: 407.5
       objectReference: {fileID: 0}
     - target: {fileID: 224980581589053142, guid: 1de00c2902ed3844a9a1b5626abef8ee,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 159.5
+      value: 163
       objectReference: {fileID: 0}
     - target: {fileID: 224980581589053142, guid: 1de00c2902ed3844a9a1b5626abef8ee,
         type: 2}
@@ -597,6 +597,23 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8ce2efc70851fb24f84028477aca038b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &960381987 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1826399483628568, guid: b02ee78aee24bc24bbbcb6b894fe2e3d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1405951198}
+--- !u!114 &960381992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 960381987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbee3028ab81c16438a703b42963a804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!114 &1137924465 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114215776831167148, guid: 9468702fd6140ff4b8fbcc7fc1204126,

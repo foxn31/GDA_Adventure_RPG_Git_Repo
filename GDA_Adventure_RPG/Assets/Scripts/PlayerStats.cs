@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour {
+public class PlayerStats : CharacterStats {
 
-	// Use this for initialization
 	void Start () {
-		
+		//EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	void onEquipmentChanged(/*Equipment oldItem, Equipment newItem */)
+    {
+        /*if (newItem != null)
+        {
+            armor.addModifier(newItem.armorModifier);
+            damage.addModifier(newItem.damageModifier);
+        }
+
+        if (oldItem != null)
+        {
+            armor.removeModifier(oldItem.armorModifier);
+            damage.removeModifier(oldItem.damageModifier);
+        }
+        */
+    }
 }

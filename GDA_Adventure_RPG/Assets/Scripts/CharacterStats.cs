@@ -15,7 +15,7 @@ public class CharacterStats : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)) // Damage Test
+        if (Input.GetKeyDown(KeyCode.Y)) // Damage Test
         {
             takeDamage(10);
         }
