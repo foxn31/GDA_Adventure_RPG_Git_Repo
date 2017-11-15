@@ -46,7 +46,6 @@ public class ThirdPersonPlayerCamera : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
 	void LateUpdate () {
 		yaw += Input.GetAxis ("Mouse X") * mouseSensitivity;
 		pitch -= Input.GetAxis ("Mouse Y") * mouseSensitivity;

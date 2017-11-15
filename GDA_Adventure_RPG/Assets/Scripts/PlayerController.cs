@@ -64,6 +64,9 @@ public class PlayerController : MonoBehaviour {
 			Jump();
 
 		}
+			
+		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.6f);
+		animator.SetFloat ("speedPercent", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
 
 		if (Input.GetKeyDown (KeyCode.T)) {
 			if (InvToggle % 2 == 1) {
@@ -77,19 +80,16 @@ public class PlayerController : MonoBehaviour {
 				Debug.Log ("hidingInv");
 			}
 		}
-			
-		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.6f);
-		animator.SetFloat ("speedPercent", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
 	}
 		
-	void Jump() {
+	void Jump () {
 		if (controller.isGrounded) {
 			float jumpVelocity = Mathf.Sqrt (-2 * gravity * jumpHeight);
 			velocityY = jumpVelocity;
 		}
 	}
 
-	void Move(Vector3 inputDir, bool running) {
+	void Move (Vector3 inputDir, bool running) {
 		if (inputDir != Vector3.zero) {
 			float targetAngle = Mathf.Atan2 (inputDir.x, inputDir.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
 			transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle (transform.eulerAngles.y, targetAngle, ref smoothedTurnVelocity, GetModififedSmoothTime (smoothedTurnTime));

@@ -10,8 +10,6 @@ public class GameUI : MonoBehaviour {
 	public GameObject inventory;
 
 	void Start () {
-		//NPCScript.ShowTalkPrompt += showTalkPrompt;
-		//NPCScript.HideTalkPrompt += hideTalkPrompt;
 		DialogueNPC.ShowTalkPrompt += showTalkPrompt;
 		DialogueNPC.HideTalkPrompt += hideTalkPrompt;
 		ItemPickup.ShowPickupPrompt += showPickupPrompt;
@@ -55,4 +53,5 @@ public class GameUI : MonoBehaviour {
 			pickupPrompt.SetActive (false);
 		}
 	}
+		
 }
