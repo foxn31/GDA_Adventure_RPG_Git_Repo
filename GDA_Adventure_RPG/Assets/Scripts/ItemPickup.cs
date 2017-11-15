@@ -11,12 +11,19 @@ public class ItemPickup: Interactable {
 
 	public Item item;
 
+    //Two different sound effects for picking up the item, and an audiosource through which to play them
+    public AudioClip pickUpSound1;
+    public AudioClip pickUpSound2;
+    private AudioSource audioSource;
+
 	void Start () {
 		if (isHDItem) {
 			transform.Rotate ( 0, 0, 30);
 		}
-		player = GameObject.FindGameObjectWithTag("Player").transform;
 
+        //Find the player and assign the player's PlayerSoundFXPlayer (index 2 of player's children) to audioSource
+		player = GameObject.FindGameObjectWithTag("Player").transform;
+        audioSource = player.GetChild(2).GetComponent<AudioSource>();
 	}
 
 	public override void Interact() {
@@ -33,9 +40,9 @@ public class ItemPickup: Interactable {
 		bool wasPickedUp = Inventory.instance.Add (item);
 
 		if (wasPickedUp) {
-			Destroy (gameObject);
+            PlayRandomPickupSound();
+            Destroy (gameObject);
 		}
-
 	}
 
 	public override void Update () {
@@ -71,4 +78,19 @@ public class ItemPickup: Interactable {
 	void animateHDItem () {
 		transform.Rotate (Vector3.up);
 	}
+
+    //Plays one of two pickup sound effects, chosen at random
+    void PlayRandomPickupSound()
+    {
+        int soundPicked = (int)Random.Range(0, 2);
+        switch (soundPicked)
+        {
+            case 0:
+                audioSource.PlayOneShot(pickUpSound1);
+                break;
+            case 1:
+                audioSource.PlayOneShot(pickUpSound2);
+                break;
+        }
+    }
 }
