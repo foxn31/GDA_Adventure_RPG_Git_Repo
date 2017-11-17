@@ -21,8 +21,25 @@ public class ItemPickup: Interactable {
 			transform.Rotate ( 0, 0, 30);
 		}
 		player = GameObject.FindGameObjectWithTag("Player").transform;
+
         //Assign the AudioSource component of player's third child (at index 2 - PlayerSoundFXPlayer) to audioSource
         audioSource = player.GetChild(2).GetComponent<AudioSource>();
+	}
+
+	public override void Update () {
+		base.Update ();
+
+		if(isHDItem) {
+			animateHDItem ();
+		}
+	}
+
+	void LateUpdate() {
+		if (playerIsInRange()) {
+			showPrompt ();
+		} else {
+			hidePrompt ();
+		}
 	}
 
 	public override void Interact() {
@@ -43,22 +60,6 @@ public class ItemPickup: Interactable {
 			Destroy (gameObject);
 		}
 
-	}
-
-	public override void Update () {
-		base.Update ();
-
-		if(isHDItem) {
-			animateHDItem ();
-		}
-	}
-
-	void LateUpdate() {
-		if (playerIsInRange()) {
-			showPrompt ();
-		} else {
-			hidePrompt ();
-		}
 	}
 
 	void showPrompt() {
