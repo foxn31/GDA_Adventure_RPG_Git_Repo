@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats {
 
-	void Start () {
-		//EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
+    void Start () {
+		EquipmentManager.instance.onEquipmentChanged += onEquipmentChanged;
 	}
 	
-	void onEquipmentChanged(/*Equipment oldItem, Equipment newItem */)
+	void onEquipmentChanged(Equipment oldItem, Equipment newItem)
     {
-        /*if (newItem != null)
+        if (newItem != null)
         {
-            armor.addModifier(newItem.armorModifier);
-            damage.addModifier(newItem.damageModifier);
+            armor.AddModifier(newItem.armorModifier);
+            damage.AddModifier(newItem.damageModifier);
         }
 
         if (oldItem != null)
         {
-            armor.removeModifier(oldItem.armorModifier);
-            damage.removeModifier(oldItem.damageModifier);
+            armor.RemoveModifier(oldItem.armorModifier);
+            damage.RemoveModifier(oldItem.damageModifier);
         }
-        */
+        
     }
 }
