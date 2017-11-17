@@ -43,7 +43,7 @@ public class EquipmentManager : MonoBehaviour {
 			inventory.Add (equippedItem);
 		}
 
-		if (OnEquipmentChanged != null) {
+		if (onEquipmentChanged != null) {
 			onEquipmentChanged.Invoke (newItem, equippedItem);
 		}
 
@@ -57,7 +57,7 @@ public class EquipmentManager : MonoBehaviour {
 
 			currentEquipment [slotIndex] = null;
 
-			if (OnEquipmentChanged != null) {
+			if (onEquipmentChanged != null) {
 				onEquipmentChanged.Invoke (null, equippedItem);
 			}
 		}
