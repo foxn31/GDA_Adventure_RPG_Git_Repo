@@ -11,11 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857dcdcf9d724894e86306d75120a871, type: 3}
   m_Name: SteelPlateHelm
   m_EditorClassIdentifier: 
-  name: Steelplate Helm
+  name: Steel Plate Helm
   icon: {fileID: 21300000, guid: 7ec803f0c7ca2a643b85bf74051de6ad, type: 3}
   isDefaultItem: 0
   equipSlot: 0
   mesh: {fileID: 137054223188196426, guid: 7b1bf80e8f3c6294988c53047586c7f7, type: 2}
-  coveredMeshRegions: 
   armorModifier: 3
   damageModifier: 0
