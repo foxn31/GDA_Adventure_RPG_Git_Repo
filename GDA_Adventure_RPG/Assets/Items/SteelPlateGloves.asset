@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 857dcdcf9d724894e86306d75120a871, type: 3}
-  m_Name: SteelPlateHelm
+  m_Name: SteelPlateGloves
   m_EditorClassIdentifier: 
-  name: Steelplate Helm
-  icon: {fileID: 21300000, guid: 7ec803f0c7ca2a643b85bf74051de6ad, type: 3}
+  name: Steelplate Gloves
+  icon: {fileID: 21300000, guid: 66bd502a1cb9a7344a2d8f7d362c404b, type: 3}
   isDefaultItem: 0
-  equipSlot: 0
-  mesh: {fileID: 137054223188196426, guid: 7b1bf80e8f3c6294988c53047586c7f7, type: 2}
-  coveredMeshRegions: 
-  armorModifier: 3
+  equipSlot: 3
+  mesh: {fileID: 137326125962239420, guid: bc345cd8673327f4a85a73c743fd3020, type: 2}
+  coveredMeshRegions: 0600000005000000
+  armorModifier: 2
   damageModifier: 0

@@ -14,8 +14,8 @@ MonoBehaviour:
   name: Leather Trousers
   icon: {fileID: 0}
   isDefaultItem: 1
-  equipSlot: 3
+  equipSlot: 4
   mesh: {fileID: 137476161851508924, guid: 491e1377b6137d74ebdbe809793355d3, type: 2}
   coveredMeshRegions: 0200000003000000
-  armorModifier: 0
+  armorModifier: 3
   damageModifier: 0

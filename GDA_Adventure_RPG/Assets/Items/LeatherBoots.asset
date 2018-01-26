@@ -14,7 +14,7 @@ MonoBehaviour:
   name: Leather Boots
   icon: {fileID: 0}
   isDefaultItem: 1
-  equipSlot: 4
+  equipSlot: 5
   mesh: {fileID: 137693906493617110, guid: acac947044b9ee94c9345ea14fdd4923, type: 2}
   coveredMeshRegions: 07000000
   armorModifier: 0
