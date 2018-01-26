@@ -20,15 +20,15 @@ public class InventoryUI : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.T) && inventoryUI.activeSelf && HideCursor != null) {
+		if (Input.GetKeyDown (KeyCode.I) && inventoryUI.activeSelf && HideCursor != null) {
 			inventoryUI.SetActive (false);
 			HideCursor ();
-			Debug.Log ("inventory hidden");
+			Debug.Log ("Inventory hidden");
 			FindObjectOfType<ThirdPersonPlayerCamera> ().EnableCamRot ();
-		} else if (Input.GetKeyDown (KeyCode.T) && !inventoryUI.activeSelf && ShowCursor != null) {
+		} else if (Input.GetKeyDown (KeyCode.I) && !inventoryUI.activeSelf && ShowCursor != null) {
 			inventoryUI.SetActive (true);
 			ShowCursor ();
-			Debug.Log ("inventory visible");
+			Debug.Log ("Inventory visible");
 			FindObjectOfType<ThirdPersonPlayerCamera> ().DisableCamRot ();
 		}
 	}
