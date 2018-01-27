@@ -4,27 +4,6 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour {
 
-    private static GameObject inventoryUIPrefab;
-
-    // Creates a new InventoryUI for the given inventory
-    public static InventoryUI CreateInventoryUI(Inventory inventory, int numColumns)
-    {
-        if (inventoryUIPrefab == null)
-        {
-            inventoryUIPrefab = (GameObject)Resources.Load("Inventory/InventoryUI.prefab");
-        }
-
-        GameObject obj = Instantiate(inventoryUIPrefab);
-
-        InventoryUI invUI = obj.GetComponent<InventoryUI>();
-        invUI.Inventory = inventory;
-        invUI.NumColumns = numColumns;
-
-        return invUI;
-    }
-
-
-
     public GameObject slotPrefab;
 
     public Transform background;
@@ -43,10 +22,21 @@ public class InventoryUI : MonoBehaviour {
         get { return _inventory; }
         set
         {
+            InventoryUnsubscribe();
             _inventory = value;
-            if (_inventory != null) _inventory.Watch(this.OnInventoryItemChanged);
+            InventorySubscribe();
             UpdateInventory();
         }
+    }
+
+    // Subscribe/Unsubscribe to InventoryItemChanged events
+    private void InventorySubscribe()
+    {
+        if (_inventory != null) _inventory.InventoryItemChanged += this.OnInventoryItemChanged;
+    }
+    private void InventoryUnsubscribe()
+    {
+        if (_inventory != null) _inventory.InventoryItemChanged -= this.OnInventoryItemChanged;
     }
 
     public void OnInventoryItemChanged(int slot, Item oldItem, Item newItem)
@@ -109,65 +99,16 @@ public class InventoryUI : MonoBehaviour {
         if (_inventory == null) _inventory = new Inventory(20);
         if (_numColumns <= 0) _numColumns = 5;
 
-        _inventory.Watch(this.OnInventoryItemChanged);
+        InventorySubscribe();
 
         Debug.Log(slotContainer);
 
         UpdateInventory();
     }
 
-    /*
-	public Transform itemsParent;
-	public GameObject inventoryUI;
-
-	public static event System.Action ShowCursor;
-	public static event System.Action HideCursor;
-
-	Inventory inventory;
-
-	InventorySlot[] slots;
-
-	void Start () {
-		inventory = Inventory.instance;
-		inventory.onItemChangedCallback += UpdateUI;
-
-		slots = itemsParent.GetComponentsInChildren<InventorySlot> ();
-	}
-
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.T) && inventoryUI.activeSelf && HideCursor != null) {
-			inventoryUI.SetActive (false);
-			HideCursor ();
-			Debug.Log ("inventory hidden");
-			FindObjectOfType<ThirdPersonPlayerCamera> ().EnableCamRot ();
-		} else if (Input.GetKeyDown (KeyCode.T) && !inventoryUI.activeSelf && ShowCursor != null) {
-			inventoryUI.SetActive (true);
-			ShowCursor ();
-			Debug.Log ("inventory visible");
-			FindObjectOfType<ThirdPersonPlayerCamera> ().DisableCamRot ();
-		}
-	}
-
-	void UpdateUI() {
-
-		Debug.Log ("Updating UI");
-
-		for (int i = 0; i < slots.Length; i++) {
-			
-			if (i < inventory.items.Count) {
-				
-				slots [i].AddItem (inventory.items [i]);
-
-			} else {
-				
-				slots [i].ClearSlot ();
-
-			}
-
-		}
-
-	}
-
-    */
+    void OnDisable()
+    {
+        InventoryUnsubscribe();
+    }
 
 }

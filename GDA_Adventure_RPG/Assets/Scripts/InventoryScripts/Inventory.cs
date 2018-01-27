@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,23 +16,22 @@ public class Inventory {
         get { return slots.Length; }
     }
 
-    public delegate void OnInventoryItemChanged(int slot, Item oldItem, Item newItem);
-    private OnInventoryItemChanged callback;
-
+    // Constructs an Inventory with a given size
     public Inventory(int size)
     {
         this.slots = new Item[size];
     }
 
-    // Watcher handling methods
-    public void Watch(OnInventoryItemChanged cb)
-    {
-        callback = cb;
-    }
+    // Event System
+    public delegate void InventoryItemChangedCallback(int slot, Item oldItem, Item newItem);
+    public event InventoryItemChangedCallback InventoryItemChanged;
 
-    private void TriggerItemChangedCallback(int slot, Item oldItem, Item newItem)
+    private void OnInventoryItemChanged(int slot, Item oldItem, Item newItem)
     {
-        callback(slot, oldItem, newItem);
+        if (InventoryItemChanged != null)
+        {
+            InventoryItemChanged(slot, oldItem, newItem);
+        }
     }
 
     // Getter methods
@@ -55,7 +55,7 @@ public class Inventory {
                 // Found an empty slot; add the item
                 Item oldItem = slots[i];
                 slots[i] = item;
-                TriggerItemChangedCallback(i, oldItem, item);
+                OnInventoryItemChanged(i, oldItem, item);
                 return true;
             }
         }
@@ -67,7 +67,7 @@ public class Inventory {
     {
         Item oldItem = slots[slot];
         slots[slot] = item;
-        TriggerItemChangedCallback(slot, oldItem, item);
+        OnInventoryItemChanged(slot, oldItem, item);
         return oldItem;
     }
 
@@ -80,7 +80,7 @@ public class Inventory {
             {
                 Item oldItem = slots[i];
                 slots[i] = null;
-                TriggerItemChangedCallback(i, oldItem, null);
+                OnInventoryItemChanged(i, oldItem, null);
                 return true;
             }
         }
@@ -93,7 +93,7 @@ public class Inventory {
         {
             Item oldItem = slots[slot];
             slots[slot] = null;
-            TriggerItemChangedCallback(slot, oldItem, null);
+            OnInventoryItemChanged(slot, oldItem, null);
             return true;
         }
         return false;
