@@ -60,6 +60,7 @@ public class InventoryUI : MonoBehaviour {
         rect.sizeDelta = new Vector2(width, height);
     }
 
+    // Handles fixing the structure of the UI if the inventory object changes
     private void UpdateInventory()
     {
         int oldSize = slotContainer.childCount;

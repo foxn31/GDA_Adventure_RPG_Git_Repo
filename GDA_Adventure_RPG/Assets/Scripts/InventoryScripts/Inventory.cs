@@ -34,7 +34,10 @@ public class Inventory {
         }
     }
 
+    //
     // Getter methods
+    //
+
     public Item Get(int slot)
     {
         return slots[slot];
@@ -45,7 +48,11 @@ public class Inventory {
         get { return slots[i]; }
     }
 
+    //
     // Insertion methods
+    //
+
+    // Adds an item at the first available slot
     public bool Add(Item item)
     {
         for (int i = 0; i < slots.Length; i++)
@@ -53,9 +60,8 @@ public class Inventory {
             if (slots[i] == null)
             {
                 // Found an empty slot; add the item
-                Item oldItem = slots[i];
                 slots[i] = item;
-                OnInventoryItemChanged(i, oldItem, item);
+                OnInventoryItemChanged(i, null, item);
                 return true;
             }
         }
@@ -63,6 +69,8 @@ public class Inventory {
         return false;
     }
 
+    // Inserts an item at a given slot and returns the item that was replaced.
+    // Either item may be null
     public Item Swap(Item item, int slot)
     {
         Item oldItem = slots[slot];
@@ -71,7 +79,11 @@ public class Inventory {
         return oldItem;
     }
 
+    //
     // Removal methods
+    //
+
+    // Removes the first occurance of an item in the inventory
     public bool Remove(Item item)
     {
         for (int i = 0; i < slots.Length; i++)
@@ -87,6 +99,7 @@ public class Inventory {
         return false;
     }
 
+    // Removes the item at a specific slot
     public bool Remove(int slot)
     {
         if (slots[slot] != null)
