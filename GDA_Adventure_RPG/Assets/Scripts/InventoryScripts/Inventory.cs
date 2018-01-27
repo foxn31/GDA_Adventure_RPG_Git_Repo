@@ -1,50 +1,101 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour {
+// A wrapper over an array of items that provides common functions for
+// manipulating items in an inventory as well as allowing other scripts
+// (such as a UI script) to watch for changes
+public class Inventory {
 
-	public static Inventory instance;
+    // The contents of the inventory
+    private Item[] slots;
 
-	void Awake() {
-		if (instance != null) {
-			Debug.LogWarning ("More than one instance of Inventory found");
-		}
+    public int Size
+    {
+        get { return slots.Length; }
+    }
 
-		instance = this;
-	}
+    public delegate void OnInventoryItemChanged(int slot, Item oldItem, Item newItem);
+    private OnInventoryItemChanged callback;
 
-	public delegate void OnItemChanged ();
-	public OnItemChanged onItemChangedCallback;
+    public Inventory(int size)
+    {
+        this.slots = new Item[size];
+    }
 
-	public int invSpace = 20;
+    // Watcher handling methods
+    public void Watch(OnInventoryItemChanged cb)
+    {
+        callback = cb;
+    }
 
-	public List<Item> items = new List<Item>();
+    private void TriggerItemChangedCallback(int slot, Item oldItem, Item newItem)
+    {
+        callback(slot, oldItem, newItem);
+    }
 
-	public bool Add (Item item) {
+    // Getter methods
+    public Item Get(int slot)
+    {
+        return slots[slot];
+    }
 
-		if (!item.isDefaultItem) {
+    public Item this[int i]
+    {
+        get { return slots[i]; }
+    }
 
-			if (items.Count >= invSpace) {
-				Debug.Log ("Not enough space in inventory");
-				return false;
-			}
+    // Insertion methods
+    public bool Add(Item item)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == null)
+            {
+                // Found an empty slot; add the item
+                Item oldItem = slots[i];
+                slots[i] = item;
+                TriggerItemChangedCallback(i, oldItem, item);
+                return true;
+            }
+        }
+        // Inventory is full; item was not added
+        return false;
+    }
 
-			items.Add (item);
+    public Item Swap(Item item, int slot)
+    {
+        Item oldItem = slots[slot];
+        slots[slot] = item;
+        TriggerItemChangedCallback(slot, oldItem, item);
+        return oldItem;
+    }
 
-			if (onItemChangedCallback != null) {
-				onItemChangedCallback.Invoke ();
-			}
-		}
+    // Removal methods
+    public bool Remove(Item item)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == item)
+            {
+                Item oldItem = slots[i];
+                slots[i] = null;
+                TriggerItemChangedCallback(i, oldItem, null);
+                return true;
+            }
+        }
+        return false;
+    }
 
-		return true;
-	}
-
-	public void Remove (Item item) {
-		items.Remove(item);
-		if (onItemChangedCallback != null) {
-			onItemChangedCallback.Invoke ();
-		}
-	}
-
+    public bool Remove(int slot)
+    {
+        if (slots[slot] != null)
+        {
+            Item oldItem = slots[slot];
+            slots[slot] = null;
+            TriggerItemChangedCallback(slot, oldItem, null);
+            return true;
+        }
+        return false;
+    }
 }

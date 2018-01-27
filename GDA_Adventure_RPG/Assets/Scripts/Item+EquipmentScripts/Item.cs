@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +16,6 @@ public class Item : ScriptableObject {
 	}
 
 	public void RemoveFromInventory() {
-		Inventory.instance.Remove(this);
+		PlayerInventory.inventory.Remove(this);
 	}
 }
