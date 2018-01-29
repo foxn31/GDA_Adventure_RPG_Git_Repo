@@ -53,7 +53,7 @@ public class ItemPickup: Interactable {
 
 		hidePrompt ();
 
-        if (PlayerInventory.inventory.Add(item))
+        if (InventorySystem.playerInventory.Add(item))
         {
             PlayRandomPickupSound();
             Destroy(gameObject);

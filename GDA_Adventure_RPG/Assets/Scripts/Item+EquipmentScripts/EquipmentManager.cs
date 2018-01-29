@@ -21,7 +21,7 @@ public class EquipmentManager : MonoBehaviour {
 	public SkinnedMeshRenderer targetMesh;
 
 	void Start () {
-		inventory = PlayerInventory.inventory;
+		inventory = InventorySystem.playerInventory;
 
 		int numSlots = System.Enum.GetNames (typeof(EquipmentSlot)).Length;
 		currentEquipment = new Equipment[numSlots];

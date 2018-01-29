@@ -107,7 +107,7 @@ public class InventoryUI : MonoBehaviour {
         UpdateInventory();
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         InventoryUnsubscribe();
     }

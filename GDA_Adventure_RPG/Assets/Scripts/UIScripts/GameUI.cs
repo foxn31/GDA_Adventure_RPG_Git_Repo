@@ -16,8 +16,8 @@ public class GameUI : MonoBehaviour {
 		ItemPickup.ShowPickupPrompt += showPickupPrompt;
 		ItemPickup.HidePickupPrompt += hidePickupPrompt;
 
-		PlayerInventory.ShowCursor += showCursor;
-		PlayerInventory.HideCursor += hideCursor;
+		InventorySystem.ShowCursor += showCursor;
+		InventorySystem.HideCursor += hideCursor;
 	}
 
 	void  showCursor()
