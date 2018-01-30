@@ -11,21 +11,30 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler {
     private Inventory inventory;
     private int slot;
 
-	void Awake() {
+    public event InventoryUI.InventoryActionCallback ItemLeftClick;
+    public event InventoryUI.InventoryActionCallback ItemRightClick;
+
+    void Awake() {
 		icon.enabled = false;
         removeButton.interactable = false;
-        removeButton.onClick.AddListener(RemoveItem);
+        //removeButton.onClick.AddListener(RemoveItem);
 	}
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            PickupItem();
+            if (ItemLeftClick != null)
+            {
+                ItemLeftClick(item, inventory, slot);
+            }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            UseItem();
+            if (ItemRightClick != null)
+            {
+                ItemRightClick(item, inventory, slot);
+            }
         }
     }
 
@@ -44,7 +53,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler {
         {
             icon.sprite = item.icon;
             icon.enabled = true;
-            removeButton.interactable = true;
+            //removeButton.interactable = true;
         }
         else
         {
@@ -52,21 +61,5 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler {
             removeButton.interactable = false;
         }
     }
-
-	public void RemoveItem() {
-        inventory.Remove(slot);
-	}
-
-    public void PickupItem()
-    {
-        InventorySystem.ItemOnCursor = inventory.Swap(InventorySystem.ItemOnCursor, slot);
-    }
-
-	public void UseItem() {
-		if (item != null) {
-			item.Use ();
-		}
-	}
-
     
 }

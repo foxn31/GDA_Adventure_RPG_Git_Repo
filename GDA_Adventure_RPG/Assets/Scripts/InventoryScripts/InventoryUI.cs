@@ -9,6 +9,24 @@ public class InventoryUI : MonoBehaviour {
     public Transform background;
     public Transform slotContainer;
 
+    public delegate void InventoryActionCallback(Item item, Inventory inventory, int slot);
+    public event InventoryActionCallback ItemLeftClick;
+    public event InventoryActionCallback ItemRightClick;
+    void OnItemLeftClick(Item item, Inventory inventory, int slot)
+    {
+        if (ItemLeftClick != null)
+        {
+            ItemLeftClick(item, inventory, slot);
+        }
+    }
+    void OnItemRightClick(Item item, Inventory inventory, int slot)
+    {
+        if (ItemRightClick != null)
+        {
+            ItemRightClick(item, inventory, slot);
+        }
+    }
+
     private Inventory _inventory;
     private int _numColumns = -1;
 
@@ -73,6 +91,12 @@ public class InventoryUI : MonoBehaviour {
             {
                 GameObject slot = Instantiate(slotPrefab);
                 slot.transform.SetParent(slotContainer, false);
+
+                // Propagate events from the slot to this entire inventory UI so that scripts
+                // can control left/right click behavior
+                InventorySlot s = slot.GetComponent<InventorySlot>();
+                s.ItemLeftClick += OnItemLeftClick;
+                s.ItemRightClick += OnItemRightClick;
             }
         }
         else if (oldSize > _inventory.Size)
