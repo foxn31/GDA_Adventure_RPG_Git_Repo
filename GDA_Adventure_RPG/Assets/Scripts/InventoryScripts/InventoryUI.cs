@@ -59,7 +59,6 @@ public class InventoryUI : MonoBehaviour {
 
     public void OnInventoryItemChanged(int slot, Item oldItem, Item newItem)
     {
-        Debug.Log("OnInventoryItemChanged " + slot);
         slotContainer.GetChild(slot).GetComponent<InventorySlot>().SetItem(newItem);
     }
 

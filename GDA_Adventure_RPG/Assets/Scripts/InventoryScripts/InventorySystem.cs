@@ -8,7 +8,7 @@ public class InventorySystem : MonoBehaviour {
 
     public static InventorySystem instance;
 
-    public static Inventory playerInventory = new Inventory(8 * 5);
+    public static Inventory playerInventory = new Inventory(8 * 3);
 
     private static Item _itemOnCursor;
     public static Item ItemOnCursor
@@ -76,8 +76,7 @@ public class InventorySystem : MonoBehaviour {
             if (playerInventoryUI.gameObject.activeSelf)
             {
                 playerInventoryUI.gameObject.SetActive(false);
-                HideCursor();
-                Debug.Log("Inventory Hidden");
+                if (HideCursor != null) HideCursor();
                 FindObjectOfType<ThirdPersonPlayerCamera>().EnableCamRot();
 
                 // if the user closes their inventory while moving an item, remove the item from
@@ -91,8 +90,7 @@ public class InventorySystem : MonoBehaviour {
             else
             {
                 playerInventoryUI.gameObject.SetActive(true);
-                ShowCursor();
-                Debug.Log("Inventory Visible");
+                if (ShowCursor != null) ShowCursor();
                 FindObjectOfType<ThirdPersonPlayerCamera>().DisableCamRot();
             }
         }
