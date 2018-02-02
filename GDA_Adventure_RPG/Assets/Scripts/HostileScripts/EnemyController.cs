@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
     public float lookRadius = 5f;
+	public float speed = 10f;
 
     Transform target;
     NavMeshAgent agent;
@@ -13,6 +14,7 @@ public class EnemyController : MonoBehaviour {
 	void Start () {
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
+		agent.speed = speed;
 	}
 	
 	
