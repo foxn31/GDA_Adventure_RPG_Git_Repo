@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
@@ -16,8 +16,8 @@ public class GameUI : MonoBehaviour {
 		ItemPickup.ShowPickupPrompt += showPickupPrompt;
 		ItemPickup.HidePickupPrompt += hidePickupPrompt;
 
-		InventoryUI.ShowCursor += showCursor;
-		InventoryUI.HideCursor += hideCursor;
+		InventorySystem.ShowCursor += showCursor;
+		InventorySystem.HideCursor += hideCursor;
 	}
 
 	void  showCursor()

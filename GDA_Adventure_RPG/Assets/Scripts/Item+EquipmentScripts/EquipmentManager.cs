@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +21,7 @@ public class EquipmentManager : MonoBehaviour {
 	public SkinnedMeshRenderer targetMesh;
 
 	void Start () {
-		inventory = Inventory.instance;
+		inventory = InventorySystem.playerInventory;
 
 		int numSlots = System.Enum.GetNames (typeof(EquipmentSlot)).Length;
 		currentEquipment = new Equipment[numSlots];

@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4894478692861292}
-  - component: {fileID: 114493304828670678}
   - component: {fileID: 114086754931615662}
   - component: {fileID: 114517500216460702}
+  - component: {fileID: 114419470169356422}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,8 +53,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971fc0d1db763a647bc2df6c3481a340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultItems:
+  - {fileID: 11400000, guid: 3d34ca5da6479ac44ab80ee7574a1610, type: 2}
+  - {fileID: 11400000, guid: 73f34cc5ea7d69a4fb91fc1c67987aac, type: 2}
+  - {fileID: 11400000, guid: 2b63adc3bd5d4434daf1cd2da9e66c3e, type: 2}
   targetMesh: {fileID: 0}
---- !u!114 &114493304828670678
+--- !u!114 &114419470169356422
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -62,11 +66,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1403268265102620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e162ce502884384296b13f6a4198904, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bf5c114cf77b7b418dae9ba8bd94c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invSpace: 20
-  items: []
+  playerInventoryUI: {fileID: 0}
+  cursorImage: {fileID: 0}
 --- !u!114 &114517500216460702
 MonoBehaviour:
   m_ObjectHideFlags: 1
