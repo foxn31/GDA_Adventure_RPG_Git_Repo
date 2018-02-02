@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemPickup: Interactable {
 
@@ -53,11 +53,12 @@ public class ItemPickup: Interactable {
 
 		hidePrompt ();
 
-        if (InventorySystem.playerInventory.Add(item))
-        {
+		bool wasPickedUp = Inventory.instance.Add (item);
+
+		if (wasPickedUp) {
             PlayRandomPickupSound();
-            Destroy(gameObject);
-        }
+			Destroy (gameObject);
+		}
 
 	}
 

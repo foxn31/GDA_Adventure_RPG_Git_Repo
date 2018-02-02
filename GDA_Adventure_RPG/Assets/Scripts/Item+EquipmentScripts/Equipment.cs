@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,9 +13,9 @@ public class Equipment : Item {
 	public int damageModifier;
 
 	public override void Use() {
-        base.Use();
-        RemoveFromInventory();
-		EquipmentManager.instance.Equip(this);
+		base.Use ();
+		EquipmentManager.instance.Equip (this);
+		RemoveFromInventory();
 	}
 
 

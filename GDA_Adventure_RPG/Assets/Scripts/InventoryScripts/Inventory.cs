@@ -1,114 +1,50 @@
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// A wrapper over an array of items that provides common functions for
-// manipulating items in an inventory as well as allowing other scripts
-// (such as a UI script) to watch for changes
-public class Inventory {
+public class Inventory : MonoBehaviour {
 
-    // The contents of the inventory
-    private Item[] slots;
+	public static Inventory instance;
 
-    public int Size
-    {
-        get { return slots.Length; }
-    }
+	void Awake() {
+		if (instance != null) {
+			Debug.LogWarning ("More than one instance of Inventory found");
+		}
 
-    // Constructs an Inventory with a given size
-    public Inventory(int size)
-    {
-        this.slots = new Item[size];
-    }
+		instance = this;
+	}
 
-    // Event System
-    public delegate void InventoryItemChangedCallback(int slot, Item oldItem, Item newItem);
-    public event InventoryItemChangedCallback InventoryItemChanged;
+	public delegate void OnItemChanged ();
+	public OnItemChanged onItemChangedCallback;
 
-    private void OnInventoryItemChanged(int slot, Item oldItem, Item newItem)
-    {
-        if (InventoryItemChanged != null)
-        {
-            InventoryItemChanged(slot, oldItem, newItem);
-        }
-    }
+	public int invSpace = 20;
 
-    //
-    // Getter methods
-    //
+	public List<Item> items = new List<Item>();
 
-    public Item Get(int slot)
-    {
-        return slots[slot];
-    }
+	public bool Add (Item item) {
 
-    public Item this[int i]
-    {
-        get { return slots[i]; }
-    }
+		if (!item.isDefaultItem) {
 
-    //
-    // Insertion methods
-    //
+			if (items.Count >= invSpace) {
+				Debug.Log ("Not enough space in inventory");
+				return false;
+			}
 
-    // Adds an item at the first available slot
-    public bool Add(Item item)
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i] == null)
-            {
-                // Found an empty slot; add the item
-                slots[i] = item;
-                OnInventoryItemChanged(i, null, item);
-                return true;
-            }
-        }
-        // Inventory is full; item was not added
-        return false;
-    }
+			items.Add (item);
 
-    // Inserts an item at a given slot and returns the item that was replaced.
-    // Either item may be null
-    public Item Swap(Item item, int slot)
-    {
-        Item oldItem = slots[slot];
-        slots[slot] = item;
-        OnInventoryItemChanged(slot, oldItem, item);
-        return oldItem;
-    }
+			if (onItemChangedCallback != null) {
+				onItemChangedCallback.Invoke ();
+			}
+		}
 
-    //
-    // Removal methods
-    //
+		return true;
+	}
 
-    // Removes the first occurance of an item in the inventory
-    public bool Remove(Item item)
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i] == item)
-            {
-                Item oldItem = slots[i];
-                slots[i] = null;
-                OnInventoryItemChanged(i, oldItem, null);
-                return true;
-            }
-        }
-        return false;
-    }
+	public void Remove (Item item) {
+		items.Remove(item);
+		if (onItemChangedCallback != null) {
+			onItemChangedCallback.Invoke ();
+		}
+	}
 
-    // Removes the item at a specific slot
-    public bool Remove(int slot)
-    {
-        if (slots[slot] != null)
-        {
-            Item oldItem = slots[slot];
-            slots[slot] = null;
-            OnInventoryItemChanged(slot, oldItem, null);
-            return true;
-        }
-        return false;
-    }
 }
