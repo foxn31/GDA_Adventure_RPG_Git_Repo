@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
-    public float lookRadius = 5f;
-
-	public float speed = 10f;
-	public float maxAggro = 20f;
-	public Vector3 startPosition = new Vector3 (-39, 1, -27);
+	public float AggroRange;
+	public float maxAggro;  //Change this in inspector??
+	public float speed;
+	public Vector3 startPosition; //= new Vector3 (-39, 1, -27);
 	public bool hasAggro = false;
 
     Transform target;
@@ -18,27 +17,45 @@ public class EnemyController : MonoBehaviour {
         target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
 		agent.transform.position = startPosition;
-		agent.speed = speed;
 	}
 
 	void Update () {
-        float distanceToPlayer = Vector3.Distance(target.position, transform.position);
+		float aggroDistance = Vector3.Distance (startPosition, target.position);
 		float distanceFromStart = Vector3.Distance (startPosition, transform.position);
-		if ((distanceToPlayer <= lookRadius) && distanceFromStart <= maxAggro) {
-			agent.SetDestination (target.position);
+
+		if (aggroDistance < AggroRange) {
 			hasAggro = true;
-		} else if (distanceFromStart >= maxAggro) {
-			agent.SetDestination (startPosition);
-			hasAggro = false;
+		}
+
+		if (hasAggro) {
+			if (distanceFromStart < maxAggro) {
+				AttackPlayer ();
+			} else if (distanceFromStart >= maxAggro) {
+				hasAggro = false;
+				ReturnToStart ();
+			}
 		}
 	}
+		
+	void AttackPlayer() {
+		agent.speed = speed;
+		agent.SetDestination (target.position);
+		Debug.Log (agent.speed);
+	}
 
+	void ReturnToStart() {
+		agent.speed = speed * (3 / 2f);
+		agent.SetDestination (startPosition);
+		Debug.Log (agent.speed);
+	}
+
+		
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
+		Gizmos.DrawWireSphere(startPosition, AggroRange);
 
 		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere (transform.position, maxAggro);
+		Gizmos.DrawWireSphere (startPosition, maxAggro);
     }
 }
