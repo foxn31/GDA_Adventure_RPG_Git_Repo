@@ -6,36 +6,89 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Quest", menuName = "Quest/Quest")]
 public class Quest : ScriptableObject {
 
-    [CreateAssetMenu(fileName = "New Simple Objective", menuName = "Quest/Simple Objective")]
-    public class QuestObjective : ScriptableObject {
-        public string objectiveName;
-
-        public event Action OnTrigger;
-        public virtual void Trigger()
-        {
-            if (OnTrigger != null) OnTrigger();
-        }
-    }
-
-    [CreateAssetMenu(fileName = "New Count Objective", menuName = "Quest/Count Objective")]
-    public class CountQuestObjective : QuestObjective
+    [Serializable]
+    public class QuestObjective
     {
-        public int goalCount = 0;
-        private int count = 0;
+        public string name;
+        public int countRequired = 1;
 
-        public override void Trigger()
+        private int currentCount = 0;
+
+        public bool IsComplete
         {
-            count++;
-            if (count == goalCount)
+            get
             {
-                base.Trigger();
+                return currentCount >= countRequired;
+            }
+        }
+
+        public event Action<QuestObjective> OnComplete;
+        public void Trigger()
+        {
+            currentCount += 1;
+            if (currentCount == countRequired)
+            {
+                if (OnComplete != null) OnComplete(this);
             }
         }
     }
 
+    [Header("Quest Info")]
     public string questName;
     [TextArea]
     public string questDescription;
-    public List<QuestObjective> objectives;
+    
+    [Header("Dependencies")]
+    [Tooltip("Quests that must be completed before this one is available")]
+    public Quest[] dependencies;
+    [Tooltip("Auto start this quest once its depenencies are completed")]
+    public bool autoStart = true;
+    
+    [Header("Objectives")]
+    public QuestObjective[] objectives;
+
+    public bool IsComplete
+    {
+        get
+        {
+            return complete;
+        }
+    }
+
+    private bool complete = false;
+    public event Action<Quest> OnComplete;
+
+    public void Awake()
+    {
+        foreach (QuestObjective o in objectives)
+        {
+            o.OnComplete += ObjectiveCompleteHandler;
+        }
+        foreach (Quest q in dependencies)
+        {
+            q.OnComplete += DependencyCompleteHandler;
+        }
+    }
+
+    private void ObjectiveCompleteHandler(QuestObjective objective)
+    {
+        foreach (QuestObjective q in objectives)
+        {
+            if (!q.IsComplete) return;
+        }
+        // All objectives are complete
+        complete = true;
+        if (OnComplete != null) OnComplete(this);
+    }
+
+    private void DependencyCompleteHandler(Quest quest)
+    {
+        foreach (Quest q in dependencies)
+        {
+            if (!q.IsComplete) return;
+        }
+        // All dependencies are complete
+
+    }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestSystem : MonoBehaviour {
+public class QuestManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
