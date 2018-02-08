@@ -1,81 +1,105 @@
 ﻿using UnityEngine;
 
-public class DialogueNPC : Interactable {
+public class DialogueNPC : Interactable
+{
 
-	public static event System.Action ShowTalkPrompt;
-	public static event System.Action HideTalkPrompt;
+    public static event System.Action ShowTalkPrompt;
+    public static event System.Action HideTalkPrompt;
 
-	bool promptVisible = true;
+    bool promptVisible = true;
 
-	public Dialogue dialogue;
+    public Dialogue dialogue;
 
-	int sentenceIncrement = 0;
-	float timeAtLastDiologue;
+    public Quest quest;
+    public int questTriggerSentence;
 
-	void Start () {
-		player = GameObject.FindGameObjectWithTag("Player").transform;
-		DialogueManager.EndAllDialogue += endThisDialogue;
-	}
-		
-	public override void Interact() {
-		
-		base.Interact ();
+    bool active = false;
+    float timeAtLastDiologue;
 
-		if(sentenceIncrement == 0) {
-			TriggerDialogue ();
-			timeAtLastDiologue = Time.time;
-			hidePrompt();
-		}
-		if (Time.time >= (timeAtLastDiologue + .1)) {
-			TriggerNextDialogue ();
-			timeAtLastDiologue = Time.time;
-		}
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        DialogueManager.EndAllDialogue += EndThisDialogue;
+    }
 
-	}
+    public override void Interact()
+    {
 
-	public override void Update () {
-		base.Update ();
-	}
+        base.Interact();
 
-	void LateUpdate() {
-		if (playerIsInRange() && sentenceIncrement == 0) {
-			showPrompt ();
-		} else {
-			hidePrompt ();
-		}
-	}
+        if (!active)
+        {
+            StartDialogue();
+            timeAtLastDiologue = Time.time;
+            HidePrompt();
+        }
+        else if (Time.time >= (timeAtLastDiologue + .1))
+        {
+            ContinueDialogue();
+            timeAtLastDiologue = Time.time;
+        }
 
-	public void TriggerDialogue() {
-		if (sentenceIncrement == 0) {
-			FindObjectOfType <DialogueManager> ().StartDialogue (dialogue);
-			sentenceIncrement++;
-		}
-	}
+    }
 
-	public void TriggerNextDialogue() {
-		FindObjectOfType <DialogueManager> ().DisplayNextSentence ();
-		if (sentenceIncrement == dialogue.getSize ()) {
-			sentenceIncrement = 0;
-		} else {
-			sentenceIncrement++;
-		}
-	}
-		
-	void showPrompt() {
-		if (!promptVisible && ShowTalkPrompt != null) {
-			ShowTalkPrompt ();
-			promptVisible = true;
-		}
-	}
+    public override void Update()
+    {
+        base.Update();
+    }
 
-	void hidePrompt() {
-		if (promptVisible && HideTalkPrompt != null) {
-			HideTalkPrompt ();
-			promptVisible = false;
-		}
-	}
+    void LateUpdate()
+    {
+        if (playerIsInRange() && !active)
+        {
+            ShowPrompt();
+        }
+        else
+        {
+            HidePrompt();
+        }
+    }
 
-	void endThisDialogue () {
-		isInteracting = false;
-	}
+    public void CheckQuestTrigger()
+    {
+        if (quest != null && DialogueManager.instance.SentenceIndex == questTriggerSentence)
+        {
+            QuestManager.TriggerQuestProgress(quest);
+        }
+    }
+
+    public void StartDialogue()
+    {
+        DialogueManager.instance.StartDialogue(dialogue);
+        CheckQuestTrigger();
+        active = true;
+    }
+
+    public void ContinueDialogue()
+    {
+        DialogueManager.instance.ContinueDialogue();
+        CheckQuestTrigger();
+    }
+
+    void ShowPrompt()
+    {
+        if (!promptVisible && ShowTalkPrompt != null)
+        {
+            ShowTalkPrompt();
+            promptVisible = true;
+        }
+    }
+
+    void HidePrompt()
+    {
+        if (promptVisible && HideTalkPrompt != null)
+        {
+            HideTalkPrompt();
+            promptVisible = false;
+        }
+    }
+
+    void EndThisDialogue()
+    {
+        isInteracting = false;
+        active = false;
+    }
 }

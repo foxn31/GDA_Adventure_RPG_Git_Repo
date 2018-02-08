@@ -46,7 +46,7 @@ public class NPCScript : MonoBehaviour {
 	}
 
 	public void TriggerNextDialogue() {
-		FindObjectOfType <DialogueManager> ().DisplayNextSentence ();
+		FindObjectOfType <DialogueManager> ().ContinueDialogue ();
 		if (sentenceIncrement == dialogue.getSize ()) {
 			sentenceIncrement = 0;
 		} else {

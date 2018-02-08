@@ -3,64 +3,91 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour {
+public class DialogueManager : MonoBehaviour
+{
 
-	public Text nameText;
-	public Text dialogueText;
+    public Text nameText;
+    public Text dialogueText;
 
-	public GameObject dialogueUI;
+    public GameObject dialogueUI;
 
-	private Queue<string> sentences;
+    private string[] sentences;
+    public int SentenceIndex { get; private set; }
+    public bool Active { get; private set; }
 
-	public static event System.Action EndAllDialogue;
+    public static event System.Action EndAllDialogue;
 
-	void Start () {
-		sentences = new Queue<string> ();
-		dialogueUI.SetActive (false);
-	}
+    public static DialogueManager instance;
 
-	public void StartDialogue(Dialogue dialogue)
-	{
-		FindObjectOfType<PlayerController> ().DisableMove ();
+    void Start()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-		dialogueUI.SetActive (true);
+        instance = this;
 
-		nameText.text = dialogue.name;
+        dialogueUI.SetActive(false);
+        Active = false;
+    }
 
-		sentences.Clear ();
+    public void StartDialogue(Dialogue dialogue)
+    {
+        FindObjectOfType<PlayerController>().DisableMove();
 
-		foreach (string sentence in dialogue.sentences) {
-			sentences.Enqueue (sentence);
-		}
+        dialogueUI.SetActive(true);
+        Active = true;
 
-		DisplayNextSentence ();
-	}
+        nameText.text = dialogue.name;
 
-	public void DisplayNextSentence() {
-		if (sentences.Count == 0) {
-			EndDialogue ();
-			return;
-		}
-		string sentence = sentences.Dequeue ();
-		StopAllCoroutines();
-		StartCoroutine (TypeSentence (sentence));
-	}
+        sentences = dialogue.sentences;
 
-	IEnumerator TypeSentence (string sentence) {
-		dialogueText.text = "";
-		foreach (char letter in sentence.ToCharArray()) {
-			dialogueText.text += letter;
-			yield return null;
-		}
-	}
+        SentenceIndex = 0;
+        DisplaySentence();
+    }
 
-	void EndDialogue() {
-		dialogueUI.SetActive (false);
-		FindObjectOfType<PlayerController> ().EnableMove ();
-		if (EndAllDialogue != null) {
-			EndAllDialogue ();
-		}
-	}
+    public void ContinueDialogue()
+    {
+        SentenceIndex++;
+
+        if (SentenceIndex >= sentences.Length)
+        {
+            EndDialogue();
+            return;
+        }
+
+        DisplaySentence();
+    }
+
+    private void DisplaySentence()
+    {
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(sentences[SentenceIndex]));
+    }
+
+    IEnumerator TypeSentence(string sentence)
+    {
+        dialogueText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return null;
+        }
+    }
+
+    void EndDialogue()
+    {
+        dialogueUI.SetActive(false);
+        Active = false;
+
+        FindObjectOfType<PlayerController>().EnableMove();
+        if (EndAllDialogue != null)
+        {
+            EndAllDialogue();
+        }
+    }
 
 
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -663,6 +663,12 @@ Prefab:
       value: 
       objectReference: {fileID: 114899760171247102, guid: e5e8fb85741901640889ebb9f633a470,
         type: 2}
+    - target: {fileID: 114713811358830714, guid: 9c8c6cf1c9c6ba54cb7be7f816ad7fca,
+        type: 2}
+      propertyPath: quest
+      value: 
+      objectReference: {fileID: 11400000, guid: cca5b34a6f230e6468321c1d8d74cfe1,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9c8c6cf1c9c6ba54cb7be7f816ad7fca, type: 2}
   m_IsPrefabParent: 0
@@ -751,6 +757,10 @@ Prefab:
     - target: {fileID: 4082057892988952, guid: b02ee78aee24bc24bbbcb6b894fe2e3d, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826399483628568, guid: b02ee78aee24bc24bbbcb6b894fe2e3d, type: 2}
+      propertyPath: m_Icon
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b02ee78aee24bc24bbbcb6b894fe2e3d, type: 2}
@@ -1011,6 +1021,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114399834926147014, guid: 8ce2efc70851fb24f84028477aca038b,
+        type: 2}
+      propertyPath: dialogue.sentences.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4721518474053262, guid: 8ce2efc70851fb24f84028477aca038b, type: 2}
       propertyPath: m_LocalPosition.x
       value: -7.88
@@ -1042,6 +1057,22 @@ Prefab:
     - target: {fileID: 4721518474053262, guid: 8ce2efc70851fb24f84028477aca038b, type: 2}
       propertyPath: m_RootOrder
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114399834926147014, guid: 8ce2efc70851fb24f84028477aca038b,
+        type: 2}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: You should find the Lorax.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114399834926147014, guid: 8ce2efc70851fb24f84028477aca038b,
+        type: 2}
+      propertyPath: quest
+      value: 
+      objectReference: {fileID: 11400000, guid: f5cc84caeed520742b8440191a5e44b6,
+        type: 2}
+    - target: {fileID: 114399834926147014, guid: 8ce2efc70851fb24f84028477aca038b,
+        type: 2}
+      propertyPath: questTriggerSentence
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8ce2efc70851fb24f84028477aca038b, type: 2}
@@ -1096,6 +1127,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114517500216460702, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1078867478}
     - target: {fileID: 114419470169356422, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
         type: 2}
       propertyPath: playerInventoryUI
@@ -1106,16 +1142,6 @@ Prefab:
       propertyPath: cursorImage
       value: 
       objectReference: {fileID: 1983315963}
-    - target: {fileID: 114517500216460702, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
-        type: 2}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1078867478}
-    - target: {fileID: 114086754931615662, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
-        type: 2}
-      propertyPath: targetMesh
-      value: 
-      objectReference: {fileID: 577214537}
     - target: {fileID: 114419470169356422, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
         type: 2}
       propertyPath: deleteConfirmDialog
@@ -1131,6 +1157,11 @@ Prefab:
       propertyPath: cancelDeleteButton
       value: 
       objectReference: {fileID: 1397392888}
+    - target: {fileID: 114086754931615662, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
+        type: 2}
+      propertyPath: targetMesh
+      value: 
+      objectReference: {fileID: 577214537}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ed3e8f4fac11634d8046c78f5495ccd, type: 2}
   m_IsPrefabParent: 0
@@ -1584,6 +1615,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114953813920783580, guid: 38ac735641dbd1245aada82c326ddcc5,
+        type: 2}
+      propertyPath: dialogue.sentences.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4425103233995796, guid: 38ac735641dbd1245aada82c326ddcc5, type: 2}
       propertyPath: m_LocalPosition.x
       value: -6.2
@@ -1615,6 +1651,22 @@ Prefab:
     - target: {fileID: 4425103233995796, guid: 38ac735641dbd1245aada82c326ddcc5, type: 2}
       propertyPath: m_RootOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114953813920783580, guid: 38ac735641dbd1245aada82c326ddcc5,
+        type: 2}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: You should speak to Jim.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114953813920783580, guid: 38ac735641dbd1245aada82c326ddcc5,
+        type: 2}
+      propertyPath: quest
+      value: 
+      objectReference: {fileID: 11400000, guid: 3269550c93a99424ca223ac7ac0e33f2,
+        type: 2}
+    - target: {fileID: 114953813920783580, guid: 38ac735641dbd1245aada82c326ddcc5,
+        type: 2}
+      propertyPath: questTriggerSentence
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 38ac735641dbd1245aada82c326ddcc5, type: 2}
