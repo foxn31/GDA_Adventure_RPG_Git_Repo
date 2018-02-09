@@ -1,42 +1,65 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour {
+public class InventorySlot : MonoBehaviour, IPointerClickHandler {
 
 	public Image icon;
 	public Button removeButton;
 
-	Item item;
+	private Item item;
+    private Inventory inventory;
+    private int slot;
 
-	void Start() {
+    public event InventoryUI.InventoryActionCallback ItemLeftClick;
+    public event InventoryUI.InventoryActionCallback ItemRightClick;
+
+    void Awake() {
 		icon.enabled = false;
+        removeButton.interactable = false;
+        //removeButton.onClick.AddListener(RemoveItem);
 	}
 
-	public void AddItem(Item newitem) {
-		item = newitem;
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            if (ItemLeftClick != null)
+            {
+                ItemLeftClick(item, inventory, slot);
+            }
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (ItemRightClick != null)
+            {
+                ItemRightClick(item, inventory, slot);
+            }
+        }
+    }
 
-		icon.sprite = item.icon;
-		icon.enabled = true;
-		removeButton.interactable = true;
-	}
+    // Should be called whenever the slot is created or when the inventory it is part of changes
+    public void Bind(Inventory inventory, int slot)
+    {
+        this.inventory = inventory;
+        this.slot = slot;
+    }
 
-	public void ClearSlot () {
-		item = null;
+    public void SetItem(Item newItem)
+    {
+        item = newItem;
 
-		icon.sprite = null;
-		icon.enabled = false;
-		removeButton.interactable = false;
-	}
-
-	public void OnRemoveButton() {
-		Inventory.instance.Remove (item);
-
-		Debug.Log ("Removing" + item);
-	}
-
-	public void UseItem() {
-		if (item != null) {
-			item.Use ();
-		}
-	}
+        if (item != null)
+        {
+            icon.sprite = item.icon;
+            icon.enabled = true;
+            //removeButton.interactable = true;
+        }
+        else
+        {
+            icon.enabled = false;
+            removeButton.interactable = false;
+        }
+    }
+    
 }
