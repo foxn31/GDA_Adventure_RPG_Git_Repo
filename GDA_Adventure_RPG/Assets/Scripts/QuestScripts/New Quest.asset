@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: New Quest
   m_EditorClassIdentifier: 
   questName: Do The Thing
-  flavorText: 
+  flavorText: Jim seems like someone you should talk to.
   prerequisites: []
   autoStart: 1
   objective: Talk to Jim
