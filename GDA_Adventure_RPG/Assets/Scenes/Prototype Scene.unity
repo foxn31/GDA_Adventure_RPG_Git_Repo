@@ -467,6 +467,12 @@ SkinnedMeshRenderer:
   m_PrefabParentObject: {fileID: 137380524531012942, guid: b02ee78aee24bc24bbbcb6b894fe2e3d,
     type: 2}
   m_PrefabInternal: {fileID: 609338848}
+--- !u!114 &589693369 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114790192745544996, guid: 1de00c2902ed3844a9a1b5626abef8ee,
+    type: 2}
+  m_PrefabInternal: {fileID: 1890675507}
+  m_Script: {fileID: 11500000, guid: 7bf2aca6b3412554ca12dde9ea13a6aa, type: 3}
 --- !u!1001 &609338848
 Prefab:
   m_ObjectHideFlags: 0
@@ -783,11 +789,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114517500216460702, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
+    - target: {fileID: 114723557047936424, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
         type: 2}
-      propertyPath: player
+      propertyPath: questUI
       value: 
-      objectReference: {fileID: 1078867478}
+      objectReference: {fileID: 589693369}
+    - target: {fileID: 114086754931615662, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
+        type: 2}
+      propertyPath: targetMesh
+      value: 
+      objectReference: {fileID: 577214537}
     - target: {fileID: 114419470169356422, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
         type: 2}
       propertyPath: playerInventoryUI
@@ -813,11 +824,11 @@ Prefab:
       propertyPath: cancelDeleteButton
       value: 
       objectReference: {fileID: 1397392888}
-    - target: {fileID: 114086754931615662, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
+    - target: {fileID: 114517500216460702, guid: 5ed3e8f4fac11634d8046c78f5495ccd,
         type: 2}
-      propertyPath: targetMesh
+      propertyPath: player
       value: 
-      objectReference: {fileID: 577214537}
+      objectReference: {fileID: 1078867478}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ed3e8f4fac11634d8046c78f5495ccd, type: 2}
   m_IsPrefabParent: 0
@@ -1336,6 +1347,10 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 384.41464
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688592253082622, guid: 1de00c2902ed3844a9a1b5626abef8ee, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1de00c2902ed3844a9a1b5626abef8ee, type: 2}

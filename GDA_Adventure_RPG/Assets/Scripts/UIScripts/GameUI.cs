@@ -9,41 +9,34 @@ public class GameUI : MonoBehaviour {
 	public GameObject pickupPrompt;
 	public GameObject inventory;
 
+    public static GameUI instance;
+
 	void Start () {
+        if (instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+
+        instance = this;
+
 		DialogueNPC.ShowTalkPrompt += showTalkPrompt;
 		DialogueNPC.HideTalkPrompt += hideTalkPrompt;
 
 		ItemPickup.ShowPickupPrompt += showPickupPrompt;
 		ItemPickup.HidePickupPrompt += hidePickupPrompt;
-
-		InventorySystem.ShowCursor += showCursor;
-		InventorySystem.HideCursor += hideCursor;
 	}
 
-	void  showCursor()
+	public void ShowCursor()
 	{
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
 	}
 
-	void  hideCursor()
+	public void HideCursor()
 	{
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
-	}
-
-	void showInventory() {
-		if (!inventory.activeSelf) {
-			inventory.SetActive (true);
-			//disable move
-		}
-	}
-
-	void hideInventory() {
-		if (inventory.activeSelf) {
-			inventory.SetActive (false);
-			//enable move
-		}
 	}
 
 	void showTalkPrompt() {

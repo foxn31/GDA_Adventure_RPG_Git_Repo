@@ -98,5 +98,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f44ff8837770941ae70b810aa77c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startAutomatically:
-  - {fileID: 11400000, guid: 3269550c93a99424ca223ac7ac0e33f2, type: 2}
+  questUI: {fileID: 0}

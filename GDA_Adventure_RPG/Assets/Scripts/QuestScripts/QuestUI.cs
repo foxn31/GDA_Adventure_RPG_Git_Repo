@@ -54,6 +54,20 @@ public class QuestUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+                GameUI.instance.ShowCursor();
+                FindObjectOfType<ThirdPersonPlayerCamera>().DisableCamRot();
+            }
+            else
+            {
+                gameObject.SetActive(true);
+                GameUI.instance.HideCursor();
+                FindObjectOfType<ThirdPersonPlayerCamera>().EnableCamRot();
+            }
+        }
     }
 }

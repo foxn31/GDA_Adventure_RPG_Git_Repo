@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour {
 
+    public QuestUI questUI;
+
     public static HashSet<Quest> activeQuests { get; private set; }
     private static Dictionary<Quest, int> progress;
     private static Dictionary<Quest, HashSet<Quest>> questUnlocks;
@@ -128,6 +130,25 @@ public class QuestManager : MonoBehaviour {
         }
 
         QuestListChanged();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (questUI.gameObject.activeSelf)
+            {
+                questUI.gameObject.SetActive(false);
+                GameUI.instance.HideCursor();
+                FindObjectOfType<ThirdPersonPlayerCamera>().EnableCamRot();
+            }
+            else
+            {
+                questUI.gameObject.SetActive(true);
+                GameUI.instance.ShowCursor();
+                FindObjectOfType<ThirdPersonPlayerCamera>().DisableCamRot();
+            }
+        }
     }
 
     public void OnGUI()

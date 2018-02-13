@@ -29,9 +29,6 @@ public class InventorySystem : MonoBehaviour {
         }
     }
 
-    public static event System.Action ShowCursor;
-    public static event System.Action HideCursor;
-
     public InventoryUI playerInventoryUI;
     public Image cursorImage;
     public GameObject deleteConfirmDialog;
@@ -76,7 +73,7 @@ public class InventorySystem : MonoBehaviour {
             if (playerInventoryUI.gameObject.activeSelf)
             {
                 playerInventoryUI.gameObject.SetActive(false);
-                if (HideCursor != null) HideCursor();
+                GameUI.instance.HideCursor();
                 FindObjectOfType<ThirdPersonPlayerCamera>().EnableCamRot();
 
                 // if the user closes their inventory while moving an item, remove the item from
@@ -90,7 +87,7 @@ public class InventorySystem : MonoBehaviour {
             else
             {
                 playerInventoryUI.gameObject.SetActive(true);
-                if (ShowCursor != null) ShowCursor();
+                GameUI.instance.ShowCursor();
                 FindObjectOfType<ThirdPersonPlayerCamera>().DisableCamRot();
             }
         }
