@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,14 +8,15 @@ public class QuestManager : MonoBehaviour {
     private static Dictionary<Quest, int> progress;
     private static Dictionary<Quest, HashSet<Quest>> questUnlocks;
 
+    public static event System.Action OnQuestListChanged;
+    private static void QuestListChanged()
+    {
+        if (OnQuestListChanged != null) OnQuestListChanged();
+    }
+
     public static bool IsComplete(Quest q)
     {
-        int prog;
-        if (progress.TryGetValue(q, out prog))
-        {
-            return prog >= q.requiredCount;
-        }
-        return false;
+        return GetProgress(q) >= q.requiredCount;
     }
 
     public static bool IsAvailable(Quest q)
@@ -27,18 +28,30 @@ public class QuestManager : MonoBehaviour {
         return true;
     }
 
+    public static int GetProgress(Quest q)
+    {
+        int prog;
+        if (progress.TryGetValue(q, out prog))
+        {
+            return prog;
+        }
+        return 0;
+    }
+
     public static void StartQuest(Quest q)
     {
         // Quests that are already complete can't be started
         if (IsAvailable(q) && !IsComplete(q))
         {
             activeQuests.Add(q);
+            QuestListChanged();
         }
     }
 
     public static void AbandonQuest(Quest q)
     {
         activeQuests.Remove(q);
+        QuestListChanged();
     }
 
     public static bool IsQuestActive(Quest q)
@@ -72,6 +85,8 @@ public class QuestManager : MonoBehaviour {
                     // StartQuest() will make sure it actually can be started
                     if (nextQ.autoStart) StartQuest(nextQ);
                 }
+
+                QuestListChanged();
             }
         }
     }
@@ -111,6 +126,8 @@ public class QuestManager : MonoBehaviour {
                 StartQuest(q);
             }
         }
+
+        QuestListChanged();
     }
 
     public void OnGUI()
