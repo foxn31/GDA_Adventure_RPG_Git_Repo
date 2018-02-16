@@ -5,7 +5,10 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
 
-	float timeSinceAggro;
+	public enum States { IDLE, CHASING, ATTACKING, FLEEING};
+	public States state;
+
+	//float timeSinceAggro;
 	public float minAggroRange;
 	public float maxAggroRange;
 	public float attackRange;
@@ -25,30 +28,34 @@ public class EnemyController : MonoBehaviour {
 	Animator animator;
 
 	void Start () {
-        target = PlayerManager.instance.player.transform;
         agent = GetComponent<NavMeshAgent>();
 		animator = GetComponentInChildren<Animator> ();
+
+		target = PlayerManager.instance.player.transform;
 		startPosition = transform.position;
+
+		state = States.IDLE;
 	}
 
 	void Update () {
-		float distanceToTarget = Vector3.Distance (startPosition, target.position);
+		float startDistanceToTarget = Vector3.Distance (startPosition, target.position);
 		float myDistanceFromStart = Vector3.Distance (startPosition, transform.position);
-		float attackDistance = Vector3.Distance (transform.position, target.position);
+		float myDistanceFromTarget = Vector3.Distance (transform.position, target.position);
 
+		moveAnimSpeed = 1;//Mathf.Lerp(0, 1, Mathf.Clamp01(timeSinceAggro/3));
 
 		if (myDistanceFromStart <= .1f) {
-			timeSinceAggro = 0;
+			//timeSinceAggro = 0;
 			hasAggro = false;
+			moveAnimSpeed = 0;
 		}
-
-		if (distanceToTarget < minAggroRange) {
+		if (startDistanceToTarget < minAggroRange) {
 			hasAggro = true;
-			timeSinceAggro = Time.time;
+			//timeSinceAggro = Time.time;
 		}
 
 		if (hasAggro) {
-			if(myDistanceFromStart < maxAggroRange && !isAttacking && attackDistance <= attackRange) 
+			if(myDistanceFromStart < maxAggroRange && !isAttacking && myDistanceFromTarget <= attackRange) 
 			{
 				hasAggro = true;
 				AttackPlayer ();
@@ -62,8 +69,12 @@ public class EnemyController : MonoBehaviour {
 				ReturnToStart ();
 			}
 		}
+			
 
-		moveAnimSpeed = Mathf.Lerp(0, 1, Mathf.Clamp01(timeSinceAggro/3));
+		if(myDistanceFromTarget < 1) {
+			moveAnimSpeed = 0;
+		}
+
 		animator.SetFloat ("moveSpeed", moveAnimSpeed, animSmoothedSpeedTime, Time.deltaTime);
 	}
 		
