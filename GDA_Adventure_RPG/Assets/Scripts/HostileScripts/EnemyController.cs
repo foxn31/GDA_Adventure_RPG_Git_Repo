@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour {
 	public float maxAggroRange;
 	public float attackRange;
 	public float speed;
+	float moveAnimSpeed = 0;
 	float animSmoothedSpeedTime = 0.1f;
 	//float animSmoothVelocity;
 	//float animSmoothedSpeedTime = 0.1f;
@@ -34,7 +35,7 @@ public class EnemyController : MonoBehaviour {
 		float distanceToTarget = Vector3.Distance (startPosition, target.position);
 		float myDistanceFromStart = Vector3.Distance (startPosition, transform.position);
 		float attackDistance = Vector3.Distance (transform.position, target.position);
-		float moveAnimSpeed = 0;
+
 
 		if (myDistanceFromStart <= .1f) {
 			timeSinceAggro = 0;
