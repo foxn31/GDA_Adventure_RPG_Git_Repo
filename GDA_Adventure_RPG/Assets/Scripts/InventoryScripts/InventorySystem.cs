@@ -70,12 +70,10 @@ public class InventorySystem : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.T) || Input.GetKeyDown(KeyCode.I))
         {
-            if (playerInventoryUI.gameObject.activeSelf)
-            {
-                playerInventoryUI.gameObject.SetActive(false);
-                GameUI.instance.HideCursor();
-                FindObjectOfType<ThirdPersonPlayerCamera>().EnableCamRot();
+            GameUI.instance.ToggleUIElement(playerInventoryUI.gameObject);
 
+            if (!playerInventoryUI.gameObject.activeSelf)
+            {
                 // if the user closes their inventory while moving an item, remove the item from
                 // the cursor and add it to their inventory
                 if (ItemOnCursor != null)
@@ -83,12 +81,6 @@ public class InventorySystem : MonoBehaviour {
                     playerInventory.Add(ItemOnCursor);
                     ItemOnCursor = null;
                 }
-            }
-            else
-            {
-                playerInventoryUI.gameObject.SetActive(true);
-                GameUI.instance.ShowCursor();
-                FindObjectOfType<ThirdPersonPlayerCamera>().DisableCamRot();
             }
         }
 

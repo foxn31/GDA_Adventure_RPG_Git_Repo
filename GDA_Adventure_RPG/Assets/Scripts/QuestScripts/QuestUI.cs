@@ -51,23 +51,4 @@ public class QuestUI : MonoBehaviour {
 
         scrollbar.size = Mathf.Clamp(viewport.rect.height / contents.rect.height, 0, 1);
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (gameObject.activeSelf)
-            {
-                gameObject.SetActive(false);
-                GameUI.instance.ShowCursor();
-                FindObjectOfType<ThirdPersonPlayerCamera>().DisableCamRot();
-            }
-            else
-            {
-                gameObject.SetActive(true);
-                GameUI.instance.HideCursor();
-                FindObjectOfType<ThirdPersonPlayerCamera>().EnableCamRot();
-            }
-        }
-    }
 }

@@ -12,8 +12,7 @@ public class ItemPickup: Interactable {
 	public Item item;
 
     //Added audio objects to play the pickup sound effect
-    public AudioClip pickupSound1;
-    public AudioClip pickupSound2;
+    public AudioClip[] pickupSounds;
     private AudioSource audioSource;
 
 	void Start () {
@@ -23,7 +22,7 @@ public class ItemPickup: Interactable {
 		player = GameObject.FindGameObjectWithTag("Player").transform;
 
         //Assign the AudioSource component of player's third child (at index 2 - PlayerSoundFXPlayer) to audioSource
-        audioSource = player.GetChild(2).GetComponent<AudioSource>();
+        audioSource = player.Find("PlayerSoundFXPlayer").GetComponent<AudioSource>();
 	}
 
 	public override void Update () {
@@ -84,15 +83,10 @@ public class ItemPickup: Interactable {
      */
     void PlayRandomPickupSound()
     {
-        int soundChoice = Random.Range(0, 2);
-        switch (soundChoice)
+        if (pickupSounds.Length > 0)
         {
-            case 0:
-                audioSource.PlayOneShot(pickupSound1);
-                break;
-            case 1:
-                audioSource.PlayOneShot(pickupSound2);
-                break;
+            int soundChoice = Random.Range(0, pickupSounds.Length);
+            audioSource.PlayOneShot(pickupSounds[soundChoice]);
         }
     }
 }

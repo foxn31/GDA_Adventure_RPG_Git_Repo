@@ -11,6 +11,9 @@ public class GameUI : MonoBehaviour {
 
     public static GameUI instance;
 
+    private HashSet<GameObject> openUIElements = new HashSet<GameObject>();
+    private ThirdPersonPlayerCamera playerCamera;
+
 	void Start () {
         if (instance != null)
         {
@@ -25,7 +28,47 @@ public class GameUI : MonoBehaviour {
 
 		ItemPickup.ShowPickupPrompt += showPickupPrompt;
 		ItemPickup.HidePickupPrompt += hidePickupPrompt;
-	}
+
+        playerCamera = FindObjectOfType<ThirdPersonPlayerCamera>();
+    }
+
+    public void ToggleUIElement(GameObject obj)
+    {
+        if (obj.activeSelf)
+        {
+            HideUIElement(obj);
+        }
+        else
+        {
+            ShowUIElement(obj);
+        }
+    }
+
+    public void ShowUIElement(GameObject obj)
+    {
+        if (openUIElements.Count == 0)
+        {
+            // This is the first element to be opened
+            ShowCursor();
+            playerCamera.DisableCamRot();
+        }
+
+        openUIElements.Add(obj);
+        obj.SetActive(true);
+    }
+
+    public void HideUIElement(GameObject obj)
+    {
+        openUIElements.Remove(obj);
+        obj.SetActive(false);
+
+        if (openUIElements.Count == 0)
+        {
+            // All elements are now closed
+            HideCursor();
+            playerCamera.EnableCamRot();
+        }
+    }
 
 	public void ShowCursor()
 	{
