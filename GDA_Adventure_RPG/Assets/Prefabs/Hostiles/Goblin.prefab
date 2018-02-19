@@ -170,7 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4326801095002746}
   - component: {fileID: 23757776364920510}
-  - component: {fileID: 114631647805926416}
+  - component: {fileID: 114190476126413554}
   - component: {fileID: 195559031842527092}
   - component: {fileID: 136057791839133742}
   m_Layer: 0
@@ -954,8 +954,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241830459915592}
-  m_LocalRotation: {x: -0, y: 0.99434805, z: -0, w: -0.10616967}
-  m_LocalPosition: {x: 11.023862, y: 0, z: 10.134434}
+  m_LocalRotation: {x: -0, y: 0.7356367, z: -0, w: -0.6773763}
+  m_LocalPosition: {x: 10.42, y: 0, z: 9.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4972910983324418}
@@ -1459,7 +1459,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114631647805926416
+--- !u!114 &114190476126413554
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1467,15 +1467,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1241830459915592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61683283cf15c5644956ed8e62de1306, type: 3}
+  m_Script: {fileID: 11500000, guid: 042b6ec9167bb504e971b678eab1d341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAggroRange: 3
-  maxAggroRange: 10
-  attackRange: 0.5
-  speed: 4
-  hasAggro: 0
-  isAttacking: 0
+  goblinState: 0
+  animSmoothedSpeedTime: 0.1
+  moveAnimSpeed: 0
+  minAggroRange: 2.74
+  maxAggroRange: 6.82
+  attackRange: 0.84
+  speed: 4.21
+  health: 39.27
 --- !u!136 &136057791839133742
 CapsuleCollider:
   m_ObjectHideFlags: 1
