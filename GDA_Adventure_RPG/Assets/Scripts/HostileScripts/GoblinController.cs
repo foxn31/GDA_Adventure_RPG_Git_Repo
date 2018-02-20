@@ -22,13 +22,18 @@ public class GoblinController : MonoBehaviour
 
 	public float animSmoothedSpeedTime = 0.1f;
 	public float moveAnimSpeed;
-	public float minAggroRange;
-	public float maxAggroRange;
-	public float attackRange;
 	public float speed;
 	public float health;
 
+	private float minAggroRange;
+	private float maxAggroRange;
+	private float attackRange;
+
 	void Start () {
+		minAggroRange = 2f;
+		maxAggroRange = 20f;
+		attackRange = .5f;
+
 		agent = GetComponent<NavMeshAgent>();
 		animator = GetComponentInChildren<Animator> ();
 
