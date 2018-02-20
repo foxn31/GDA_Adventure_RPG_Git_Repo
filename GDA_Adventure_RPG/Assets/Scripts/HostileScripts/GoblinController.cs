@@ -59,7 +59,7 @@ public class GoblinController : MonoBehaviour
 			if (health < percentHealth(10)) {
 				goblinState = States.ReturnToStart;
 			}
-			else if (distanceFromTarget > 2f) {
+			else if (distanceFromTarget > 1.5f) {
 				goblinState = States.Chase;
 			}
 			break;
@@ -73,7 +73,7 @@ public class GoblinController : MonoBehaviour
 
 		case States.Chase:
 				
-			if (distanceFromTarget < 1f) {
+			if (distanceFromTarget < .75f) {
 				goblinState = States.Attack;
 			}
 			if (distanceFromStart > maxAggroRange) {
@@ -105,7 +105,13 @@ public class GoblinController : MonoBehaviour
 		case States.Attack:
 
 			//Attack player
-			animator.SetFloat ("moveSpeed", 0, animSmoothedSpeedTime, Time.deltaTime);
+			agent.SetDestination(transform.position);
+
+			transform.rotation = Quaternion.LookRotation(target.position - transform.position);
+
+			animator.SetFloat ("moveSpeed", 0, animSmoothedSpeedTime, Time.deltaTime);	//Temp
+
+			//animator.
 
 			break;
 
