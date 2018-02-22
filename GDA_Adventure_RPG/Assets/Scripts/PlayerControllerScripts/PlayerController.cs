@@ -119,5 +119,16 @@ public class PlayerController : MonoBehaviour {
 		return smoothTime / airControlPercent;
 	}
 
+	float getSpeed()
+	{
+		if (running) {
+			return runSpeed;
+		} else if (movementDisabled) {
+			return 0;
+		} else {
+			return walkSpeed;
+		}
+	}
+
 }
 
