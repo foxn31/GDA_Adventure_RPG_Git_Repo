@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
 	bool isInventoryShowing;
 
 	Vector3 inputDirection;
+	Vector3 storedInput;
 
 	Transform cameraTransform;
 	CharacterController controller;
@@ -52,21 +53,34 @@ public class PlayerController : MonoBehaviour {
 				velocityY = 0;
 				Jump();
 			}
+			else if (controller.isGrounded) {
+				animator.SetBool ("onAirborne", false);
+			}
 		} 
 		else if (movementDisabled) {
 			inputDirection = Vector3.zero;
 		}
 
-		Move (inputDirection, running);	
-			
-		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.55f);
-		animator.SetFloat ("moveSpeed", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
+		if (!animator.GetBool("completeLand")) {
+			//inputDirection = Vector3.zero;
+			MoveWithoutCam (storedInput/2, false);	
+		}
+		else if (animator.GetBool("completeLand")) {
+			Move (inputDirection, running);	
+			animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.55f);
+			animator.SetFloat ("moveSpeed", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
+		}
 	}
 		
 	void Jump () {
 		if (controller.isGrounded) {
 			float jumpVelocity = Mathf.Sqrt (-2 * gravity * jumpHeight);
 			velocityY = jumpVelocity;
+
+			updateStoredMovement ();
+
+			animator.SetBool ("onAirborne", true);
+			animator.SetInteger ("airborneSpc", 1);
 		}
 	}
 
@@ -94,6 +108,26 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 		
+	void MoveWithoutCam (Vector3 inputDir, bool running) {
+
+		running = Input.GetKey (KeyCode.LeftShift);
+		speed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;
+
+		currentSpeed = Mathf.SmoothDamp (currentSpeed, speed, ref smoothedVelocity, GetModififedSmoothTime (smoothedSpeedTime));
+
+		if (!controller.isGrounded) {
+			velocityY += Time.deltaTime * gravity;
+		}
+
+		Vector3 velocity = transform.forward * currentSpeed + Vector3.up * velocityY;
+
+		controller.Move (velocity * Time.deltaTime);
+
+		if (controller.isGrounded) {
+			velocityY += 0;
+		}
+	}
+
 	public void DisableMove() {
 		if (!movementDisabled) {
 			movementDisabled = true;
@@ -128,5 +162,9 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void updateStoredMovement() {
+		Vector3 input = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
+		storedInput = input.normalized;
+	}
 }
 
