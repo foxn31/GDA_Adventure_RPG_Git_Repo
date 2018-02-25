@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour {
 	}	
 
 	void Update () {
-
 		if (!movementDisabled) {
 			Vector3 input = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical"));
 			inputDirection = input.normalized;
@@ -53,15 +52,15 @@ public class PlayerController : MonoBehaviour {
 				velocityY = 0;
 				Jump();
 			}
-		} else if (movementDisabled) {
+		} 
+		else if (movementDisabled) {
 			inputDirection = Vector3.zero;
 		}
 
 		Move (inputDirection, running);	
 			
-		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.6f);
+		animatorSpeedPercent = ((running) ? currentSpeed/runSpeed : currentSpeed/walkSpeed *.55f);
 		animator.SetFloat ("moveSpeed", animatorSpeedPercent, smoothedSpeedTime, Time.deltaTime);
-
 	}
 		
 	void Jump () {
@@ -93,7 +92,6 @@ public class PlayerController : MonoBehaviour {
 		if (controller.isGrounded) {
 			velocityY += 0;
 		}
-
 	}
 		
 	public void DisableMove() {

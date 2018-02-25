@@ -20,27 +20,21 @@ public class GoblinController : MonoBehaviour
 	Animator animator;
 	Vector3 startPosition;
 
-	public float animSmoothedSpeedTime = 0.1f;
-	public float moveAnimSpeed;
-	public float speed;
-	public float health;
+	private float animSmoothedSpeedTime = 0.1f;
+	//private float moveAnimSpeed;
+	private float speed = 5;
+	private float health = 100;
+	private float minAggroRange = 2f;
+	private float maxAggroRange = 20f;
+	private float attackRange = 1f;
 
-	private float minAggroRange;
-	private float maxAggroRange;
-	private float attackRange;
-
-	void Start () {
-		minAggroRange = 2f;
-		maxAggroRange = 20f;
-		attackRange = .5f;
-
-		agent = GetComponent<NavMeshAgent>();
+	void Start () {		
+		agent = GetComponent<NavMeshAgent> ();
 		animator = GetComponentInChildren<Animator> ();
 
 		startPosition = transform.position;
 		startPosition = transform.position;
 
-		health = 100;
 		target = PlayerManager.instance.player.transform;
 	}
 
@@ -64,7 +58,7 @@ public class GoblinController : MonoBehaviour
 			if (health < percentHealth(10)) {
 				goblinState = States.ReturnToStart;
 			}
-			else if (distanceFromTarget > 1.5f) {
+			else if (distanceFromTarget > attackRange) {
 				goblinState = States.Chase;
 			}
 			break;
@@ -78,7 +72,7 @@ public class GoblinController : MonoBehaviour
 
 		case States.Chase:
 				
-			if (distanceFromTarget < .75f) {
+			if (distanceFromTarget < attackRange) {
 				goblinState = States.Attack;
 			}
 			if (distanceFromStart > maxAggroRange) {
@@ -128,6 +122,11 @@ public class GoblinController : MonoBehaviour
 			break;
 
 		case States.Flee:
+
+			agent.speed = speed * (3 / 2f);
+			agent.SetDestination (startPosition);
+
+			animator.SetFloat ("moveSpeed", 1, animSmoothedSpeedTime, Time.deltaTime);
 
 			//Move away from player
 			//Look in the opposite direction
