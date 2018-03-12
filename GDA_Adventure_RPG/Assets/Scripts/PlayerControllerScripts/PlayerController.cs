@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour {
 		cameraTransform = Camera.main.transform;
 		controller = GetComponent<CharacterController> ();
 		animator = GetComponentInChildren<Animator> ();
+		//animator.SetInteger ("currentWeapon", 1);
 	}
 
 	bool onGround () {
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour {
 	}
 		
 	void Jump () {
-		if (controller.isGrounded) {
+		if (controller.isGrounded && animator.GetBool("completeLand")) {
 			float jumpVelocity = Mathf.Sqrt (-2 * gravity * jumpHeight);
 			velocityY = jumpVelocity;
 
