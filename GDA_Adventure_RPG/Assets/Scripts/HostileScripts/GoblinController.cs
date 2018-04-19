@@ -24,7 +24,7 @@ public class GoblinController : MonoBehaviour
 	//private float moveAnimSpeed;
 	private float speed = 5;
 	private float health = 100;
-	private float minAggroRange = 2f;
+	private float minAggroRange = 5f;
 	private float maxAggroRange = 20f;
 	private float attackRange = 1f;
 

@@ -8,6 +8,7 @@ public class GameUI : MonoBehaviour {
 	public GameObject talkPrompt;
 	public GameObject pickupPrompt;
 	public GameObject inventory;
+	public GameObject optionsTab;
 
     public static GameUI instance;
 
@@ -32,6 +33,13 @@ public class GameUI : MonoBehaviour {
         playerCamera = FindObjectOfType<ThirdPersonPlayerCamera>();
     }
 
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.Tab)) {
+			instance.ToggleUIElement (optionsTab);
+		}
+	}
+
     public void ToggleUIElement(GameObject obj)
     {
         if (obj.activeSelf)
@@ -43,7 +51,7 @@ public class GameUI : MonoBehaviour {
             ShowUIElement(obj);
         }
     }
-
+		
     public void ShowUIElement(GameObject obj)
     {
         if (openUIElements.Count == 0)
@@ -105,5 +113,4 @@ public class GameUI : MonoBehaviour {
 			pickupPrompt.SetActive (false);
 		}
 	}
-		
 }

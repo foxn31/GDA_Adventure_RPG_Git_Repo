@@ -11,6 +11,7 @@ public class InventoryUI : MonoBehaviour {
     public delegate void InventoryActionCallback(Item item, Inventory inventory, int slot);
     public event InventoryActionCallback ItemLeftClick;
     public event InventoryActionCallback ItemRightClick;
+
     void OnItemLeftClick(Item item, Inventory inventory, int slot)
     {
         if (ItemLeftClick != null)

@@ -5,8 +5,13 @@ using UnityEngine;
 public class PetScript : MonoBehaviour {
 
 	public Transform playerTarget;
+
+	float maxDistanceFromPlayer = 3f;
 	float speed = 5;
+
 	Vector3 height = new Vector3(0,2,0);
+
+
 	void Update() {
 		Vector3 displacementFromPlayer = playerTarget.position - transform.position + height;
 		Vector3 directionToPlayer = displacementFromPlayer.normalized;
@@ -14,7 +19,7 @@ public class PetScript : MonoBehaviour {
 
 		float distanceToPlayer = displacementFromPlayer.magnitude;
 
-		if (distanceToPlayer > 3f) {
+		if (distanceToPlayer > maxDistanceFromPlayer) {
 			transform.Translate (velocity * Time.deltaTime);
 		}
 	}

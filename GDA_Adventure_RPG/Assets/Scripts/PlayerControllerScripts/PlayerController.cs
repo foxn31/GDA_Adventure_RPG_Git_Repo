@@ -26,13 +26,15 @@ public class PlayerController : MonoBehaviour {
     Vector3 velocity = Vector3.zero;
     float movementSpeed = 0;
     float speedSmoothingVelocity = 0;
-    float movementSmoothingTime = 0.1f;
+    float movementSmoothingTime = 0.01f;
 
     bool movementEnabled = true;
 
 	Transform cameraTransform;
 	CharacterController controller;
 	Animator animator;
+
+	Vector3 direction;
 
     void Start()
     {
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         // Get input direction
-        Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         // Set the goal speed:
         //   0 if no movement buttons are pressed
         //   runSpeed if the player is running
@@ -147,5 +149,10 @@ public class PlayerController : MonoBehaviour {
     {
         movementEnabled = true;
     }
+
+/*	public void DisableTurn()
+	{
+		direction = new Vector3 (0, 0, 0);
+	} */
 }
 
