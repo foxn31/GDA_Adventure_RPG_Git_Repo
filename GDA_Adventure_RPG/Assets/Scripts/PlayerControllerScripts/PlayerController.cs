@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour {
 	public float walkSpeed = 3;
 	public float runSpeed = 8;
 
+	public float mouseSensitivityX = 1f;
+	public float mouseSensitivityY = 1f;
+
     [Range(0, 1)]
     public float airControlPercent = 0.1f;
 
@@ -26,7 +29,7 @@ public class PlayerController : MonoBehaviour {
     Vector3 velocity = Vector3.zero;
     float movementSpeed = 0;
     float speedSmoothingVelocity = 0;
-    float movementSmoothingTime = 0.01f;
+    float movementSmoothingTime = 0.001f;
 
     bool movementEnabled = true;
 
@@ -149,10 +152,5 @@ public class PlayerController : MonoBehaviour {
     {
         movementEnabled = true;
     }
-
-/*	public void DisableTurn()
-	{
-		direction = new Vector3 (0, 0, 0);
-	} */
 }
 
