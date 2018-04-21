@@ -70,6 +70,15 @@ ModelImporter:
     100124: Sun
     100126: Plane
     100128: Plane.001
+    100130: Bone.001
+    100132: Bone.001_end
+    100134: Claymore
+    100136: HandHold.L
+    100138: HandHold.L_end
+    100140: HandHold.R
+    100142: HandHold.R_end
+    100144: HeaterShield
+    100146: KiteSHield
     400000: Armature
     400002: Chest
     400004: Cube
@@ -135,6 +144,15 @@ ModelImporter:
     400124: Sun
     400126: Plane
     400128: Plane.001
+    400130: Bone.001
+    400132: Bone.001_end
+    400134: Claymore
+    400136: HandHold.L
+    400138: HandHold.L_end
+    400140: HandHold.R
+    400142: HandHold.R_end
+    400144: HeaterShield
+    400146: KiteSHield
     2300000: Plane
     2300002: Plane.001
     2300004: BeltedTunic
@@ -146,6 +164,7 @@ ModelImporter:
     2300016: SteelPlate_Gloves
     2300018: SteelPlate_Helm
     2300020: SteelPlate_Leggings
+    2300022: Claymore
     3300000: Plane
     3300002: Plane.001
     3300004: BeltedTunic
@@ -157,6 +176,7 @@ ModelImporter:
     3300016: SteelPlate_Gloves
     3300018: SteelPlate_Helm
     3300020: SteelPlate_Leggings
+    3300022: Claymore
     4300000: Cube
     4300002: Player.001
     4300004: Shirt
@@ -175,6 +195,9 @@ ModelImporter:
     4300030: SteelPlate_Chestpiece.001
     4300032: Plane.001
     4300034: Plane
+    4300036: KiteSHield
+    4300038: HeaterShield
+    4300040: Claymore
     7400000: Armature|Idle
     7400002: Armature|Run
     7400004: Armature|Walk
@@ -208,7 +231,45 @@ ModelImporter:
     13700026: SteelPlate_Boots
     13700028: SteelPlate_Helm
     13700030: SteelPlate_Chestpiece.001
+    13700032: Claymore
+    13700034: HeaterShield
+    13700036: KiteSHield
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blade
+    second: {fileID: 2100000, guid: 4f1526525229ad14ab5d2b68fa752e8f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Handle
+    second: {fileID: 2100000, guid: 55b2d8fbf8e437643973422b0a521bb9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HeaterShieldMetal
+    second: {fileID: 2100000, guid: 17425e29a4b5e8345809beccb9300821, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HeaterShieldPaint
+    second: {fileID: 2100000, guid: 5b68c89f04f001443bc5952122dcce7b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KiteShieldMetal.001
+    second: {fileID: 2100000, guid: 172ca4f21caf9a845af6b8825e7119cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KiteShieldPaint.001
+    second: {fileID: 2100000, guid: fcb2b3bf7009e8e4ab2481db22f1daf8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KiteShieldWood.001
+    second: {fileID: 2100000, guid: 5a58c7ffa4cf79a43ac08f17fb616d0b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -304,11 +365,13 @@ ModelImporter:
       significant differences with original animation were found.\n\nRetargeting quality
       report for clip 'Armature|Land01':\n\tRetargeting quality is good. No significant
       differences with original animation were found.\n\nRetargeting quality report
+      for clip 'Armature|LeftHandGrip':\n\tRetargeting quality is good. No significant
+      differences with original animation were found.\n\nRetargeting quality report
+      for clip 'Armature|RightHandGrip':\n\tRetargeting quality is good. No significant
+      differences with original animation were found.\n\nRetargeting quality report
       for clip 'Armature|Run':\n\tRetargeting quality is good. No significant differences
       with original animation were found.\n\nRetargeting quality report for clip 'Armature|StandingJump':\n\tRetargeting
       quality is good. No significant differences with original animation were found.\n\nRetargeting
-      quality report for clip 'Armature|SwordTwoHandARMS':\n\tRetargeting quality
-      is good. No significant differences with original animation were found.\n\nRetargeting
       quality report for clip 'Armature|SwordTwoHandIdle':\n\tRetargeting quality
       is good. No significant differences with original animation were found.\n\nRetargeting
       quality report for clip 'Armature|SwordTwoHandJog':\n\tRetargeting quality is
@@ -322,6 +385,8 @@ ModelImporter:
       quality report for clip 'Armature|SwordTwoHandWalk':\n\tRetargeting quality
       is good. No significant differences with original animation were found.\n\nRetargeting
       quality report for clip 'Armature|Walk':\n\tRetargeting quality is good. No
+      significant differences with original animation were found.\n\nRetargeting quality
+      report for clip 'Claymore|LeftHandGrip':\n\tRetargeting quality is good. No
       significant differences with original animation were found.\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
