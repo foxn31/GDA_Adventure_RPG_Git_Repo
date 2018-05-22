@@ -207,6 +207,7 @@ ModelImporter:
     7400024: Armature|SwordTwoHandWalk
     7400026: Armature|SwordTwoHandJog
     7400028: Armature|SwordTwoHandRun
+    7400030: Armature|FallToRollSHORT
     9500000: //RootNode
     10800000: Sun
     13700000: Cube
@@ -349,6 +350,8 @@ ModelImporter:
       quality report for clip 'Armature|Fall':\n\tRetargeting quality is good. No
       significant differences with original animation were found.\n\nRetargeting quality
       report for clip 'Armature|FallToRoll':\n\tRetargeting quality is good. No significant
+      differences with original animation were found.\n\nRetargeting quality report
+      for clip 'Armature|FallToRollSHORT':\n\tRetargeting quality is good. No significant
       differences with original animation were found.\n\nRetargeting quality report
       for clip 'Armature|HardLand':\n\tRetargeting quality is good. No significant
       differences with original animation were found.\n\nRetargeting quality report
@@ -759,6 +762,34 @@ ModelImporter:
       takeName: Armature|SwordTwoHandRun
       firstFrame: 0
       lastFrame: 16
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|FallToRollSHORT
+      takeName: Armature|FallToRollSHORT
+      firstFrame: 0
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

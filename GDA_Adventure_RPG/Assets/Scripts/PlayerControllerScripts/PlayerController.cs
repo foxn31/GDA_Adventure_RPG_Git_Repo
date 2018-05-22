@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
 
         state = MoveState.Idle;
 
-        animator.SetBool("isAirborne", false);
+        animator.SetBool("onAirborne", false);
         animator.SetFloat("moveSpeed", 0);
         animator.SetFloat("fallSpeed", 0);
         animator.SetInteger("airborneSpc", 0);
@@ -68,6 +68,10 @@ public class PlayerController : MonoBehaviour {
         {
             Debug.Log("Landing");
             goalSpeed = 0; // Player can't move while landing
+			if (animator.GetInteger ("airborneSpc") == 2) 
+			{
+				goalSpeed = 5f;
+			}
             if (animator.GetBool("completeLand"))
             {
                 state = MoveState.Idle;
@@ -77,10 +81,12 @@ public class PlayerController : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+				
                 // Jump
-                velocity.y = Mathf.Sqrt(-2 * gravity * jumpHeight);
+                //velocity.y = Mathf.Sqrt(-2 * gravity * jumpHeight);
                 state = MoveState.Airborne;
-                animator.SetBool("isAirborne", true);
+				animator.SetInteger ("airborneSpc", 3);
+                animator.SetBool("onAirborne", true);
             }
             else if (movementSpeed > 0)
             {
@@ -94,14 +100,16 @@ public class PlayerController : MonoBehaviour {
             {
                 // Player is falling
                 state = MoveState.Airborne;
-                animator.SetBool("isAirborne", true);
+				animator.SetInteger ("airborneSpc", 0);
+                animator.SetBool("onAirborne", true);
             }
             else if (Input.GetKeyDown(KeyCode.Space))
             {
                 // Jump
                 velocity.y = Mathf.Sqrt(-2 * gravity * jumpHeight);
                 state = MoveState.Airborne;
-                animator.SetBool("isAirborne", true);
+				animator.SetInteger ("airborneSpc", 2);
+                animator.SetBool("onAirborne", true);
             }
             else if (movementSpeed < 0)
             {
@@ -118,11 +126,15 @@ public class PlayerController : MonoBehaviour {
         }
         else if (state == MoveState.Airborne)
         {
+			if (!animator.GetBool ("completeLand") && animator.GetInteger("airborneSpc") == 3) 
+			{
+				movementSpeed = 0;
+			}
             if (controller.isGrounded)
             {
                 // Player has landed
                 state = MoveState.Landing;
-                animator.SetBool("isAirborne", false);
+                animator.SetBool("onAirborne", false);
             }
             else
             {
