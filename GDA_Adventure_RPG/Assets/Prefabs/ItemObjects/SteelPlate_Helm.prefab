@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4534154600409632}
   - component: {fileID: 23958792108517194}
   - component: {fileID: 33494077137936358}
+  - component: {fileID: 114205778214355978}
   m_Layer: 0
   m_Name: SteelPlate_Helm
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1533898311717908}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 1.5733185, y: -1.0610636e-17, z: 1.4335817}
+  m_LocalPosition: {x: 1.92, y: 0.15, z: 11.887434}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,3 +83,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1533898311717908}
   m_Mesh: {fileID: 4300028, guid: 11ffe7f40d912144f8c6af06030e02e8, type: 3}
+--- !u!114 &114205778214355978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1533898311717908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e60f90ae7f13f47a2afa5c9a8fee16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  interactTransform: {fileID: 4534154600409632}
+  interactRadius: 0.5
+  isInteracting: 0
+  isHDItem: 0
+  item: {fileID: 11400000, guid: 661b600c80523e540b8428be1a47453c, type: 2}
+  pickupSounds: []
