@@ -1944,6 +1944,31 @@ Prefab:
       propertyPath: m_CastShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 64862253880105978, guid: 3cc7b47409e1afe4baa5666a1a65554f,
+        type: 2}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64862253880105978, guid: 3cc7b47409e1afe4baa5666a1a65554f,
+        type: 2}
+      propertyPath: m_CookingOptions
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 23422862967747798, guid: 3cc7b47409e1afe4baa5666a1a65554f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 64862253880105978, guid: 3cc7b47409e1afe4baa5666a1a65554f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 64862253880105978, guid: 3cc7b47409e1afe4baa5666a1a65554f,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cc7b47409e1afe4baa5666a1a65554f, type: 2}
   m_IsPrefabAsset: 0
