@@ -23,18 +23,27 @@ public class PlayerController : MonoBehaviour {
     float gravity = -15;
 	float jumpHeight = 1;
 
-    Vector3 velocity = Vector3.zero;
-    float movementSpeed = 0;
-    float speedSmoothingVelocity = 0;
-    float movementSmoothingTime = 0.01f;
+	float baseAnimationSpeed;
 
-    bool movementEnabled = true;
+    Vector3 velocity = Vector3.zero;
+    //float movementSpeed = 0;
+	float currentSpeed = 0;
+	float targetSpeed = 0;
+    float movementSmoothVelocity = 0;
+    float movementSmoothTime = 0.1f;
+
+	//float turnSpeed = 0;
+	float turnSmoothVelocity = 0;
+	float turnSmoothTime = .05f;
+
+	bool movementEnabled = true;
+	bool running;
 
 	Transform cameraTransform;
 	CharacterController controller;
 	Animator animator;
 
-	Vector3 direction;
+	Vector3 inputDirection;
 
     void Start()
     {
@@ -53,24 +62,33 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         // Get input direction
-        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-        // Set the goal speed:
+        inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        
+		// Set the goal speed:
         //   0 if no movement buttons are pressed
         //   runSpeed if the player is running
         //   walkSpeed if the player is not running
-        float goalSpeed = (direction.magnitude == 0 || !movementEnabled) ? 0 : Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
-        // Set the smoothing time: this value is reduced if the player is in air
-        float smoothing = movementSmoothingTime / (state == MoveState.Airborne ? airControlPercent : 1);
-        
+		float goalSpeed = (inputDirection.magnitude == 0 || !movementEnabled) ? 0 : Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
 
+		//
+		running = Input.GetKey (KeyCode.LeftShift);
+
+		//
+		targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDirection.magnitude;
+
+		// Set the smoothing time: this value is reduced if the player is in air
+        float smoothing = movementSmoothTime / (state == MoveState.Airborne ? airControlPercent : 1);
+        
         // Perform state transitions and state-specific calculations
         if (state == MoveState.Landing)
         {
             Debug.Log("Landing");
-            goalSpeed = 0; // Player can't move while landing
+
+            targetSpeed = 0; // Player can't move while landing
 			if (animator.GetInteger ("airborneSpc") == 2) 
 			{
-				goalSpeed = 5f;
+				Debug.Log("Tree 1");
+				targetSpeed = 5f;
 			}
             if (animator.GetBool("completeLand"))
             {
@@ -79,6 +97,8 @@ public class PlayerController : MonoBehaviour {
         }
         else if (state == MoveState.Idle)
         {
+			Debug.Log("Idling");
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
 				
@@ -88,7 +108,7 @@ public class PlayerController : MonoBehaviour {
 				animator.SetInteger ("airborneSpc", 3);
                 animator.SetBool("onAirborne", true);
             }
-            else if (movementSpeed > 0)
+            else if (currentSpeed > 0)
             {
                 // Player started moving
                 state = MoveState.Moving;
@@ -111,24 +131,27 @@ public class PlayerController : MonoBehaviour {
 				animator.SetInteger ("airborneSpc", 2);
                 animator.SetBool("onAirborne", true);
             }
-            else if (movementSpeed < 0)
+            else if (currentSpeed < 0)
             {
                 // Player stopped moving
                 state = MoveState.Idle;
             }
 
             // Update facing direction
-            if (direction != Vector3.zero)
+			if (inputDirection != Vector3.zero)
             {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) + cameraTransform.eulerAngles.y * Mathf.Deg2Rad;
-                transform.eulerAngles = Vector3.up * (targetAngle * Mathf.Rad2Deg);
-            }
+                //float targetAngle = Mathf.Atan2(direction.x, direction.z) + cameraTransform.eulerAngles.y * Mathf.Deg2Rad;
+				//transform.eulerAngles = Vector3.up * (targetAngle * Mathf.Rad2Deg);
+
+				float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+				transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle (transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+			}
         }
         else if (state == MoveState.Airborne)
         {
 			if (!animator.GetBool ("completeLand") && animator.GetInteger("airborneSpc") == 3) 
 			{
-				movementSpeed = 0;
+				currentSpeed = 0;
 			}
             if (controller.isGrounded)
             {
@@ -145,11 +168,17 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Update the move speed using smoothing
-        movementSpeed = Mathf.SmoothDamp(movementSpeed, goalSpeed, ref speedSmoothingVelocity, smoothing);
-        animator.SetFloat("moveSpeed", movementSpeed);
-        //Debug.Log(goalSpeed + ", " + movementSpeed);
+    //    movementSpeed = Mathf.SmoothDamp(movementSpeed, goalSpeed, ref movementSmoothingVelocity, smoothing);
         // Perform the actual movement
-        controller.Move((velocity + transform.forward * movementSpeed) * Time.deltaTime);
+    //    controller.Move((velocity + transform.forward * movementSpeed) * Time.deltaTime);
+
+		currentSpeed = Mathf.SmoothDamp (currentSpeed, targetSpeed, ref movementSmoothVelocity, smoothing);
+
+		controller.Move((velocity + transform.forward * currentSpeed) * Time.deltaTime);
+
+		baseAnimationSpeed = ((running) ? 1 : .6f) * inputDirection.magnitude;
+		animator.SetFloat("moveSpeed", baseAnimationSpeed, movementSmoothTime, Time.deltaTime);
+
     }
 
     public void DisableMove()
@@ -164,7 +193,7 @@ public class PlayerController : MonoBehaviour {
 
 /*	public void DisableTurn()
 	{
-		direction = new Vector3 (0, 0, 0);
+		inputDirection = new Vector3 (0, 0, 0);
 	} */
 }
 
