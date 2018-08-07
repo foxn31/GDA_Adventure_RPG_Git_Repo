@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (state == MoveState.Idle)
         {
-			Debug.Log("Idling");
+			//Debug.Log("Idling");
 
             if (Input.GetKeyDown(KeyCode.Space))
             {

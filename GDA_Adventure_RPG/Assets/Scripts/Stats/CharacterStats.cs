@@ -23,7 +23,9 @@ public class CharacterStats : MonoBehaviour {
 
     public void takeDamage(int damage)
     {
-        //damage *= 1 - ();
+        
+        //Do all calculations for damage in here
+
         currentHealth -= damage;
         Debug.Log(transform.name + " takes " + damage + " damage.");
 
