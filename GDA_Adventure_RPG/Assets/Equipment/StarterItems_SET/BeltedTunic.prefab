@@ -9,17 +9,17 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1224630757652084}
+  m_RootGameObject: {fileID: 1165465641562148}
   m_IsPrefabAsset: 1
---- !u!1 &1224630757652084
+--- !u!1 &1165465641562148
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4020032039199586}
-  - component: {fileID: 137565967775514910}
+  - component: {fileID: 4261576896248326}
+  - component: {fileID: 137321025567859874}
   m_Layer: 0
   m_Name: BeltedTunic
   m_TagString: Untagged
@@ -27,25 +27,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4020032039199586
+--- !u!4 &4261576896248326
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1224630757652084}
+  m_GameObject: {fileID: 1165465641562148}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: -0.0033217564, z: 0}
+  m_LocalPosition: {x: -0, y: -0.0066435128, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &137565967775514910
+--- !u!137 &137321025567859874
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1224630757652084}
+  m_GameObject: {fileID: 1165465641562148}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -114,9 +114,13 @@ SkinnedMeshRenderer:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.00017856632, y: 0.0036407055, z: -0.0001969809}
-    m_Extent: {x: 0.0030407081, y: 0.0035216145, z: 0.0016910858}
+    m_Center: {x: 0.000014092657, y: 0.0034420243, z: -0.00025522767}
+    m_Extent: {x: 0.003514702, y: 0.0032286816, z: 0.0016659294}
   m_DirtyAABB: 0

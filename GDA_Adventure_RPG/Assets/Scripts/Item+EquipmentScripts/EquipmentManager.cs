@@ -20,6 +20,8 @@ public class EquipmentManager : MonoBehaviour {
 
 	public SkinnedMeshRenderer targetMesh;
 
+    public int weaponTypeInt = 0;
+
 	void Start () {
 		inventory = InventorySystem.playerInventory;
 
@@ -49,6 +51,10 @@ public class EquipmentManager : MonoBehaviour {
 			onEquipmentChanged.Invoke (newItem, equippedItem);
 		}
 
+        if ( (int)newItem.weaponType == 2) {
+            Unequip (6);
+        }
+
 		SetEquipmentBlendShapes (newItem, 100);
 
 		currentEquipment [slotIndex] = newItem;
@@ -58,6 +64,8 @@ public class EquipmentManager : MonoBehaviour {
 		newMesh.bones = targetMesh.bones;
 		newMesh.rootBone = targetMesh.rootBone;
 		currentMeshes [slotIndex] = newMesh;
+
+        weaponTypeInt = (int)newItem.weaponType;
 	}
 
 	public Equipment Unequip (int slotIndex) {
@@ -76,6 +84,9 @@ public class EquipmentManager : MonoBehaviour {
 			if (onEquipmentChanged != null) {
 				onEquipmentChanged.Invoke (null, equippedItem);
 			}
+
+            weaponTypeInt = 0;
+
 			return equippedItem;
 		}
 		return null;

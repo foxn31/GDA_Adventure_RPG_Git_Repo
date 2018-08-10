@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Name: LeatherTrousers
   m_EditorClassIdentifier: 
   name: Leather Trousers
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d48599bbc16d9e8439a325d12b3bde12, type: 3}
   isDefaultItem: 1
   equipSlot: 3
-  mesh: {fileID: 137476161851508924, guid: 491e1377b6137d74ebdbe809793355d3, type: 2}
+  mesh: {fileID: 137818905170963990, guid: 491e1377b6137d74ebdbe809793355d3, type: 2}
   coveredMeshRegions: 0200000003000000
   armorModifier: 0
   damageModifier: 0

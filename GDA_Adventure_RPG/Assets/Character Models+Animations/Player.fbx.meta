@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: 11ffe7f40d912144f8c6af06030e02e8
-timeCreated: 1519680676
-licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Armature
     100002: Chest
@@ -77,6 +75,10 @@ ModelImporter:
     100138: HandHold.R_end
     100140: HeaterShield
     100142: KiteSHield
+    100144: Bone
+    100146: Bone.001
+    100148: Bone.001_end
+    100150: Bone_end
     400000: Armature
     400002: Chest
     400004: Cube
@@ -149,6 +151,10 @@ ModelImporter:
     400138: HandHold.R_end
     400140: HeaterShield
     400142: KiteSHield
+    400144: Bone
+    400146: Bone.001
+    400148: Bone.001_end
+    400150: Bone_end
     2300000: Plane
     2300002: Plane.001
     2300004: BeltedTunic
@@ -369,6 +375,8 @@ ModelImporter:
       for clip 'Armature|Run':\n\tRetargeting quality is good. No significant differences
       with original animation were found.\n\nRetargeting quality report for clip 'Armature|StandingJump':\n\tRetargeting
       quality is good. No significant differences with original animation were found.\n\nRetargeting
+      quality report for clip 'Armature|SwordTwoHandAttack2':\n\tRetargeting quality
+      is good. No significant differences with original animation were found.\n\nRetargeting
       quality report for clip 'Armature|SwordTwoHandIdle':\n\tRetargeting quality
       is good. No significant differences with original animation were found.\n\nRetargeting
       quality report for clip 'Armature|SwordTwoHandJog':\n\tRetargeting quality is
@@ -385,6 +393,7 @@ ModelImporter:
       significant differences with original animation were found.\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -836,6 +845,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
