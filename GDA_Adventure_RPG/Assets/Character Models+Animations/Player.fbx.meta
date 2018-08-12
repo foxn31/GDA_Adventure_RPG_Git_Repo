@@ -79,6 +79,8 @@ ModelImporter:
     100146: Bone.001
     100148: Bone.001_end
     100150: Bone_end
+    100152: ArmingSword
+    100154: Body
     400000: Armature
     400002: Chest
     400004: Cube
@@ -155,6 +157,8 @@ ModelImporter:
     400146: Bone.001
     400148: Bone.001_end
     400150: Bone_end
+    400152: ArmingSword
+    400154: Body
     2300000: Plane
     2300002: Plane.001
     2300004: BeltedTunic
@@ -166,6 +170,7 @@ ModelImporter:
     2300016: SteelPlate_Gloves
     2300018: SteelPlate_Helm
     2300020: SteelPlate_Leggings
+    2300022: ArmingSword
     3300000: Plane
     3300002: Plane.001
     3300004: BeltedTunic
@@ -177,6 +182,7 @@ ModelImporter:
     3300016: SteelPlate_Gloves
     3300018: SteelPlate_Helm
     3300020: SteelPlate_Leggings
+    3300022: ArmingSword
     4300000: Cube
     4300002: Player.001
     4300004: Shirt
@@ -198,6 +204,8 @@ ModelImporter:
     4300036: KiteSHield
     4300038: HeaterShield
     4300040: Claymore
+    4300042: ArmingSword
+    4300044: Body
     7400000: Armature|Idle
     7400002: Armature|Run
     7400004: Armature|Walk
@@ -235,12 +243,25 @@ ModelImporter:
     13700032: Claymore
     13700034: HeaterShield
     13700036: KiteSHield
+    13700038: ArmingSword
+    13700040: Body
+    2186277476908879412: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Blade
     second: {fileID: 2100000, guid: 4f1526525229ad14ab5d2b68fa752e8f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hande
+    second: {fileID: 2100000, guid: 274c220b53c50b24d8379000f30309e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hande.001
+    second: {fileID: 2100000, guid: f9756da990066fd45a38b74f4995d245, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -289,8 +310,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 2f65782ab9fdccd43aed6304b7b2e901, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Metal.001
-    second: {fileID: 2100000, guid: cceeacaf894250f42a9e82671416ea35, type: 2}
+    second: {fileID: 2100000, guid: fe557324bf443cc4e9be370bfcdc7dd9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -375,6 +401,8 @@ ModelImporter:
       for clip 'Armature|Run':\n\tRetargeting quality is good. No significant differences
       with original animation were found.\n\nRetargeting quality report for clip 'Armature|StandingJump':\n\tRetargeting
       quality is good. No significant differences with original animation were found.\n\nRetargeting
+      quality report for clip 'Armature|StandingJump.001':\n\tRetargeting quality
+      is good. No significant differences with original animation were found.\n\nRetargeting
       quality report for clip 'Armature|SwordTwoHandAttack2':\n\tRetargeting quality
       is good. No significant differences with original animation were found.\n\nRetargeting
       quality report for clip 'Armature|SwordTwoHandIdle':\n\tRetargeting quality
@@ -1099,12 +1127,12 @@ ModelImporter:
       scale: {x: 0.99999946, y: 0.99999565, z: 0.9999957}
     - name: Spine
       parentName: Hips
-      position: {x: 2.3137544e-11, y: 0.0026087281, z: -8.2654876e-11}
+      position: {x: 2.3137542e-11, y: 0.0026087281, z: -8.2654876e-11}
       rotation: {x: -0.047085613, y: -0.000000091816005, z: 0.0000000011752057, w: 0.9988909}
       scale: {x: 1.0000001, y: 0.99999857, z: 0.9999984}
     - name: Neck
       parentName: Spine
-      position: {x: -7.858034e-12, y: 0.0034069251, z: -1.9499565e-11}
+      position: {x: -7.858034e-12, y: 0.0034069251, z: -1.9499563e-11}
       rotation: {x: 0.15937698, y: 0.00000009023215, z: -0.000000002978154, w: 0.98721784}
       scale: {x: 0.9999998, y: 0.9999995, z: 0.9999998}
     - name: Head
@@ -1119,12 +1147,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Shoulder.L
       parentName: Spine
-      position: {x: -7.858034e-12, y: 0.0034069251, z: -1.9499565e-11}
+      position: {x: -7.858034e-12, y: 0.0034069251, z: -1.9499563e-11}
       rotation: {x: 0.033247903, y: 0.009531459, z: 0.81162244, w: 0.5831576}
       scale: {x: 1.0000044, y: 1.0000014, z: 1.0000002}
     - name: Upper Arm.L
       parentName: Shoulder.L
-      position: {x: -0.00000013178158, y: 0.0019390683, z: 0.0000000070267543}
+      position: {x: -0.00000013178158, y: 0.0019390682, z: 0.0000000070267543}
       rotation: {x: -0.007295115, y: 0.18063207, z: -0.150472, w: 0.971945}
       scale: {x: 0.9999958, y: 1.00002, z: 1.0000008}
     - name: Lower Arm.L
@@ -1139,12 +1167,12 @@ ModelImporter:
       scale: {x: 1.0000095, y: 0.9999934, z: 1.0000076}
     - name: Fingers01.L
       parentName: Hand.L
-      position: {x: 7.45058e-10, y: 0.00087123585, z: 5.2154064e-10}
+      position: {x: 7.4505796e-10, y: 0.00087123585, z: 5.2154064e-10}
       rotation: {x: 0.045899875, y: 0.12236604, z: 0.15001196, w: 0.9800083}
       scale: {x: 1.0000087, y: 1.0000039, z: 0.9999939}
     - name: Fingers02.L
       parentName: Fingers01.L
-      position: {x: 1.8626451e-11, y: 0.0005893008, z: -1.4901161e-10}
+      position: {x: 1.8626451e-11, y: 0.00058930076, z: -1.4901161e-10}
       rotation: {x: 0.026566532, y: 0.03101648, z: 0.028617702, w: 0.9987559}
       scale: {x: 0.9999987, y: 1.0000153, z: 0.99999493}
     - name: Fingers02.L_end
@@ -1169,17 +1197,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Shoulder.R
       parentName: Spine
-      position: {x: -7.858034e-12, y: 0.0034069251, z: -1.9499565e-11}
+      position: {x: -7.858034e-12, y: 0.0034069251, z: -1.9499563e-11}
       rotation: {x: 0.033247765, y: -0.009531257, z: -0.81162226, w: 0.58315784}
       scale: {x: 1.000011, y: 1.0000062, z: 0.9999997}
     - name: Upper Arm.R
       parentName: Shoulder.R
-      position: {x: 0.00000015203675, y: 0.0019390655, z: -0.000000010966691}
+      position: {x: 0.00000015203675, y: 0.0019390654, z: -0.000000010966691}
       rotation: {x: 0.008086914, y: 0.17551488, z: -0.1504317, w: -0.97288203}
       scale: {x: 0.99999464, y: 1.0000159, z: 1.0000015}
     - name: Lower Arm.R
       parentName: Upper Arm.R
-      position: {x: 7.45058e-10, y: 0.0028212904, z: -0.0000000015832483}
+      position: {x: 7.4505796e-10, y: 0.0028212904, z: -0.0000000015832483}
       rotation: {x: 0.03343462, y: -0.077918366, z: -0.0012928214, w: 0.9963981}
       scale: {x: 1.0000004, y: 0.99999875, z: 1.0000007}
     - name: Hand.R
@@ -1234,7 +1262,7 @@ ModelImporter:
       scale: {x: 1.0000015, y: 0.99999714, z: 1.0000073}
     - name: Toes.L
       parentName: Foot.L
-      position: {x: -6.519258e-11, y: 0.0011988421, z: 1.862645e-10}
+      position: {x: -6.519258e-11, y: 0.0011988421, z: 1.8626449e-10}
       rotation: {x: 0.14867914, y: -0.510471, z: -0.22532396, w: 0.8164209}
       scale: {x: 0.9999598, y: 1.0000299, z: 1.0000092}
     - name: Toes.L_end
@@ -1254,7 +1282,7 @@ ModelImporter:
       scale: {x: 1.0000064, y: 1.0000061, z: 1.0000012}
     - name: Foot.R
       parentName: Lower Leg.R
-      position: {x: 1.16415315e-11, y: 0.004493733, z: 5.2154064e-10}
+      position: {x: 1.1641531e-11, y: 0.004493733, z: 5.2154064e-10}
       rotation: {x: 0.4993528, y: 0.070427366, z: 0.14797845, w: 0.8507581}
       scale: {x: 1.0000067, y: 1.0000006, z: 1.0000069}
     - name: Toes.R

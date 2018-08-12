@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour {
 
 		controller.Move((velocity + transform.forward * currentSpeed) * Time.deltaTime);
 
-		baseAnimationSpeed = ((running) ? 1 : .6f) * inputDirection.magnitude;
+		baseAnimationSpeed = ((running) ? 1 : .7f) * inputDirection.magnitude;
 		animator.SetFloat("moveSpeed", baseAnimationSpeed, movementSmoothTime, Time.deltaTime);
 
     }

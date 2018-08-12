@@ -19,10 +19,13 @@ public class EquipmentManager : MonoBehaviour {
 	Inventory inventory;
 
 	public SkinnedMeshRenderer targetMesh;
+    public Animator playerAnimator;
 
     public int weaponTypeInt = 0;
 
 	void Start () {
+        
+
 		inventory = InventorySystem.playerInventory;
 
 		int numSlots = System.Enum.GetNames (typeof(EquipmentSlot)).Length;
@@ -30,6 +33,7 @@ public class EquipmentManager : MonoBehaviour {
 		currentMeshes = new SkinnedMeshRenderer[numSlots];
 
 		EquipDefaultItems();
+
 	}
 
 	void Update() {
@@ -51,8 +55,13 @@ public class EquipmentManager : MonoBehaviour {
 			onEquipmentChanged.Invoke (newItem, equippedItem);
 		}
 
+        //Check for two handed weapons and remove equipment if they conflict
         if ( (int)newItem.weaponType == 2) {
-            Unequip (6);
+            Unequip(6);
+        }
+        if (weaponTypeInt == 2 && (int)newItem.equipSlot == 6)
+        {
+            Unequip(5); 
         }
 
 		SetEquipmentBlendShapes (newItem, 100);
@@ -66,6 +75,8 @@ public class EquipmentManager : MonoBehaviour {
 		currentMeshes [slotIndex] = newMesh;
 
         weaponTypeInt = (int)newItem.weaponType;
+        playerAnimator.SetInteger("currentWeapon", weaponTypeInt);
+        Debug.Log("CURRENT WEAPON" + weaponTypeInt);
 	}
 
 	public Equipment Unequip (int slotIndex) {

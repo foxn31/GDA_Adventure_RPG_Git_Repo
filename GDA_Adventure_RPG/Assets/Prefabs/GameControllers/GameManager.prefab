@@ -59,6 +59,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73f34cc5ea7d69a4fb91fc1c67987aac, type: 2}
   - {fileID: 11400000, guid: 2b63adc3bd5d4434daf1cd2da9e66c3e, type: 2}
   targetMesh: {fileID: 0}
+  weaponTypeInt: 0
 --- !u!114 &114419470169356422
 MonoBehaviour:
   m_ObjectHideFlags: 1
