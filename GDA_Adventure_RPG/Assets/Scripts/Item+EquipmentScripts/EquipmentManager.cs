@@ -59,7 +59,7 @@ public class EquipmentManager : MonoBehaviour {
         if ( (int)newItem.weaponType == 2) {
             Unequip(6);
         }
-        if (weaponTypeInt == 2 && (int)newItem.equipSlot == 6)
+        if (weaponTypeInt == 2 && slotIndex == 6)
         {
             Unequip(5); 
         }
@@ -96,7 +96,11 @@ public class EquipmentManager : MonoBehaviour {
 				onEquipmentChanged.Invoke (null, equippedItem);
 			}
 
-            weaponTypeInt = 0;
+            //If the equipment being unequipped is in the right hand then reset the weaponTypeInt
+            if (slotIndex == 5)
+            {
+                weaponTypeInt = 0;
+            }
 
 			return equippedItem;
 		}
