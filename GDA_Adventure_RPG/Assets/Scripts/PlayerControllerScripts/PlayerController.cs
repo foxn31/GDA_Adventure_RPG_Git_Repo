@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour {
             if (animator.GetBool("completeLand"))
             {
                 state = MoveState.Idle;
+                Debug.Log("Landing to Idle");
             }
         }
         else if (state == MoveState.Idle)

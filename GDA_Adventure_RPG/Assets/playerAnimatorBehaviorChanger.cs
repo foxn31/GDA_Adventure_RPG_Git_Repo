@@ -24,6 +24,7 @@ public class playerAnimatorBehaviorChanger : StateMachineBehaviour {
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		if (CompleteLandExit) {
 			animator.SetBool ("completeLand", true);
+            Debug.Log("Complete Land on Exit");
 		}
 	}
 
