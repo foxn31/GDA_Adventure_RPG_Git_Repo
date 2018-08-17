@@ -9,16 +9,16 @@ public class PlayerController : MonoBehaviour {
         Idle,
         Moving,
         Airborne,
-        Landing
+        Landing,
+        Combat
     }
+    MoveState state;
 
-	public float walkSpeed = 3;
+    public float walkSpeed = 3;
 	public float runSpeed = 8;
 
     [Range(0, 1)]
     public float airControlPercent = 0.1f;
-
-    MoveState state;
 
     float gravity = -15;
 	float jumpHeight = 1;
@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour {
 
 	bool movementEnabled = true;
 	bool running;
+
+    bool inCombat = false;
+    float inCombatStartTime = 0f;
+    public float inCombatDropoff = 5f;
 
 	Transform cameraTransform;
 	CharacterController controller;
@@ -70,7 +74,7 @@ public class PlayerController : MonoBehaviour {
         //   walkSpeed if the player is not running
 		float goalSpeed = (inputDirection.magnitude == 0 || !movementEnabled) ? 0 : Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
 
-		//
+		// Check if LeftShift is pressed 
 		running = Input.GetKey (KeyCode.LeftShift);
 
 		//
@@ -98,8 +102,19 @@ public class PlayerController : MonoBehaviour {
         }
         else if (state == MoveState.Idle)
         {
-			//Debug.Log("Idling");
+			if (inCombat && !getTimeinCombat())
+            {
+                //set Animator stuff here for combat stances
+            }
 
+
+            //Check if the player should be attacking
+            if (Input.GetMouseButtonDown(0))
+            {
+                state = MoveState.Combat;
+                return;
+            }
+            //Check if the player is jumping
             if (Input.GetKeyDown(KeyCode.Space))
             {
 				
@@ -109,6 +124,7 @@ public class PlayerController : MonoBehaviour {
 				animator.SetInteger ("airborneSpc", 3);
                 animator.SetBool("onAirborne", true);
             }
+            //Check if the player is moving
             else if (currentSpeed > 0)
             {
                 // Player started moving
@@ -124,6 +140,7 @@ public class PlayerController : MonoBehaviour {
 				animator.SetInteger ("airborneSpc", 0);
                 animator.SetBool("onAirborne", true);
             }
+            //Check if the player is jumping
             else if (Input.GetKeyDown(KeyCode.Space))
             {
                 // Jump
@@ -132,9 +149,9 @@ public class PlayerController : MonoBehaviour {
 				animator.SetInteger ("airborneSpc", 2);
                 animator.SetBool("onAirborne", true);
             }
+            //Check if the player has stopped moving
             else if (currentSpeed < 0)
-            {
-                // Player stopped moving
+            {            
                 state = MoveState.Idle;
             }
 
@@ -167,19 +184,33 @@ public class PlayerController : MonoBehaviour {
                 animator.SetFloat("fallSpeed", velocity.y);
             }
         }
+        else if (state == MoveState.Combat)
+        {
+            inCombat = true;
+            setInCombatTime();
+
+            //Set Animator stuff here 
+
+            inCombat = false;
+
+            state = MoveState.Idle;
+        }
 
         // Update the move speed using smoothing
     //    movementSpeed = Mathf.SmoothDamp(movementSpeed, goalSpeed, ref movementSmoothingVelocity, smoothing);
         // Perform the actual movement
     //    controller.Move((velocity + transform.forward * movementSpeed) * Time.deltaTime);
 
+        //Calculate the smoothed speed and move the attached character controller
 		currentSpeed = Mathf.SmoothDamp (currentSpeed, targetSpeed, ref movementSmoothVelocity, smoothing);
-
 		controller.Move((velocity + transform.forward * currentSpeed) * Time.deltaTime);
 
+        //Calculate target animations and set animator variables to affect animations if not currently attacking
 		baseAnimationSpeed = ((running) ? 1 : .7f) * inputDirection.magnitude;
-		animator.SetFloat("moveSpeed", baseAnimationSpeed, movementSmoothTime, Time.deltaTime);
-
+        if (!inCombat)
+        {
+            animator.SetFloat("moveSpeed", baseAnimationSpeed, movementSmoothTime, Time.deltaTime);
+        }
     }
 
     public void DisableMove()
@@ -190,6 +221,16 @@ public class PlayerController : MonoBehaviour {
     public void EnableMove()
     {
         movementEnabled = true;
+    }
+
+    public bool getTimeinCombat()
+    {
+        return (Time.time - inCombatStartTime) > inCombatDropoff;
+    }
+
+    public void setInCombatTime()
+    {
+        inCombatStartTime = Time.time;
     }
 
 /*	public void DisableTurn()
