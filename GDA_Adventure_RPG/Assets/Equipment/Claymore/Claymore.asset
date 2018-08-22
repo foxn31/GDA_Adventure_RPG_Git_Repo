@@ -20,3 +20,4 @@ MonoBehaviour:
   weaponType: 2
   armorModifier: 0
   damageModifier: 10
+  weaponAnimationSize: 2

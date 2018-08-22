@@ -22,8 +22,9 @@ public class EquipmentManager : MonoBehaviour {
     public Animator playerAnimator;
 
     public int weaponTypeInt = 0;
+    public int animationSize = 0;
 
-	void Start () {
+    void Start () {
         
 
 		inventory = InventorySystem.playerInventory;
@@ -74,9 +75,13 @@ public class EquipmentManager : MonoBehaviour {
 		newMesh.rootBone = targetMesh.rootBone;
 		currentMeshes [slotIndex] = newMesh;
 
+        //Set animator variables for player controller reference
         weaponTypeInt = (int)newItem.weaponType;
+        animationSize = newItem.weaponAnimationSize;
         playerAnimator.SetInteger("currentWeapon", weaponTypeInt);
+        playerAnimator.SetInteger("animationSize", animationSize);
         Debug.Log("CURRENT WEAPON" + weaponTypeInt);
+        Debug.Log("ANIMATION SIZE" + animationSize);
 	}
 
 	public Equipment Unequip (int slotIndex) {

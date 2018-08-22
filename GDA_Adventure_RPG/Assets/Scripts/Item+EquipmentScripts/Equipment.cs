@@ -12,6 +12,7 @@ public class Equipment : Item {
 
 	public int armorModifier;
 	public int damageModifier;
+    public int weaponAnimationSize;
 
 	public override void Use() {
         base.Use();

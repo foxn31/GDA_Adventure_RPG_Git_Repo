@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour {
         Moving,
         Airborne,
         Landing,
-        Combat
+        Combat,
+        Attacking
     }
     MoveState state;
 
@@ -39,9 +40,13 @@ public class PlayerController : MonoBehaviour {
 	bool movementEnabled = true;
 	bool running;
 
+    bool attacking = false;
     bool inCombat = false;
     float inCombatStartTime = 0f;
-    public float inCombatDropoff = 5f;
+    public float inCombatDropoff = 4f;
+    float attackInitialTime = 0f;
+    public float attackChainDropoff = 2f;
+    int tempAttackSpc = -1;
 
 	Transform cameraTransform;
 	CharacterController controller;
@@ -61,10 +66,33 @@ public class PlayerController : MonoBehaviour {
         animator.SetFloat("moveSpeed", 0);
         animator.SetFloat("fallSpeed", 0);
         animator.SetInteger("airborneSpc", 0);
+        animator.SetBool("attackComplete", true);
+        animator.SetBool("inCombat", false);
+        animator.SetInteger("animationSize", 0);
+        animator.SetInteger("attackSpc", -1);
     }
 
     void Update()
     {
+        // Check at the beginning of the frame if the player is still in combat
+        if (CombatDropped() && inCombat)
+        {
+            inCombat = false;
+            animator.SetBool("inCombat", false);
+            animator.SetInteger("attackSpc", -1);
+            Debug.Log("EXITING COMBAT");
+        }
+        // Check if the player is at the end of attack chain or has gone over the permitted chain time, reset variables if true
+        if ((tempAttackSpc + 1 == animator.GetInteger("animationSize") || ChainDropped()))
+        {
+            //Debug.Log("Tree 1");
+            //Debug.Log(tempAttackSpc + 1 == animator.GetInteger("animationSize"));
+            Debug.Log(ChainDropped());
+
+            tempAttackSpc = -1;
+            animator.SetInteger("attackSpc", -1);
+        }
+
         // Get input direction
         inputDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         
@@ -77,7 +105,7 @@ public class PlayerController : MonoBehaviour {
 		// Check if LeftShift is pressed 
 		running = Input.GetKey (KeyCode.LeftShift);
 
-		//
+		// Change the target speed based on if walking or running
 		targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDirection.magnitude;
 
 		// Set the smoothing time: this value is reduced if the player is in air
@@ -89,33 +117,32 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Landing");
 
             targetSpeed = 0; // Player can't move while landing
+
 			if (animator.GetInteger ("airborneSpc") == 2) 
 			{
 				Debug.Log("Tree 1");
-				targetSpeed = 5f;
-			}
+				targetSpeed = 5f;                
+            }
             if (animator.GetBool("completeLand"))
             {
                 state = MoveState.Idle;
+                animator.SetInteger("airborneSpc", -1);
                 Debug.Log("Landing to Idle");
             }
         }
         else if (state == MoveState.Idle)
         {
-			if (inCombat && !getTimeinCombat())
-            {
-                //set Animator stuff here for combat stances
-            }
+            //Debug.Log("IDLE");
 
-
-            //Check if the player should be attacking
+            // Check if the player should be attacking
             if (Input.GetMouseButtonDown(0))
             {
-                state = MoveState.Combat;
-                return;
+                Debug.Log("CLICKING");
+                state = MoveState.Attacking;
+                //return;
             }
-            //Check if the player is jumping
-            if (Input.GetKeyDown(KeyCode.Space))
+            // Check if the player is jumping
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
 				
                 // Jump
@@ -125,7 +152,7 @@ public class PlayerController : MonoBehaviour {
                 animator.SetBool("onAirborne", true);
             }
             //Check if the player is moving
-            else if (currentSpeed > 0)
+            else if (currentSpeed > 0.01)
             {
                 // Player started moving
                 state = MoveState.Moving;
@@ -133,6 +160,8 @@ public class PlayerController : MonoBehaviour {
         }
         else if (state == MoveState.Moving)
         {
+            //Debug.Log("MOVING");
+
             if (!controller.isGrounded)
             {
                 // Player is falling
@@ -140,7 +169,7 @@ public class PlayerController : MonoBehaviour {
 				animator.SetInteger ("airborneSpc", 0);
                 animator.SetBool("onAirborne", true);
             }
-            //Check if the player is jumping
+            // Check if the player is jumping
             else if (Input.GetKeyDown(KeyCode.Space))
             {
                 // Jump
@@ -149,8 +178,8 @@ public class PlayerController : MonoBehaviour {
 				animator.SetInteger ("airborneSpc", 2);
                 animator.SetBool("onAirborne", true);
             }
-            //Check if the player has stopped moving
-            else if (currentSpeed < 0)
+            // Check if the player has stopped moving
+            else if (currentSpeed < 0.01)
             {            
                 state = MoveState.Idle;
             }
@@ -167,33 +196,86 @@ public class PlayerController : MonoBehaviour {
         }
         else if (state == MoveState.Airborne)
         {
-			if (!animator.GetBool ("completeLand") && animator.GetInteger("airborneSpc") == 3) 
+            Debug.Log("AIRORNE");
+
+            // For straight falling
+            if (!animator.GetBool ("completeLand") && animator.GetInteger("airborneSpc") == 1) 
 			{
 				currentSpeed = 0;
 			}
+            // Player has landed
             if (controller.isGrounded)
-            {
-                // Player has landed
+            {              
                 state = MoveState.Landing;
                 animator.SetBool("onAirborne", false);
             }
+            // Apply gravity
             else
             {
-                // Apply gravity
                 velocity.y += gravity * Time.deltaTime;
                 animator.SetFloat("fallSpeed", velocity.y);
             }
         }
+        else if (state == MoveState.Attacking)
+        {
+            Debug.Log("ATTACKING");
+
+            if (animator.GetInteger("currentWeapon") == 0)
+            {
+                Debug.Log("NO WEAPON");
+                state = MoveState.Idle;
+                return;
+            }
+
+            inCombat = true;
+            SetCombatInitial();
+
+            // Set Animator stuff here 
+            animator.SetBool("inCombat", true);
+
+            //Debug.Log("ATTACK SPC: " + tempAttackSpc);
+            
+        /*    // Check if the player is at the end of attack chain or has gone over the permitted chain time, reset variables if true
+            if ((tempAttackSpc + 1 == animator.GetInteger("animationSize") || ChainDropped()))
+            {
+                Debug.Log("Tree 1");
+                Debug.Log(tempAttackSpc + 1 == animator.GetInteger("animationSize"));
+                Debug.Log(ChainDropped());
+
+                tempAttackSpc = -1;
+                animator.SetInteger("attackSpc", -1);
+            }   */
+            // Perform attack
+            if (true)
+            {
+                SetChainInitial();
+                Debug.Log(GetChainInitial());
+                Debug.Log("Tree 2");
+
+                tempAttackSpc++;
+                animator.SetInteger("attackSpc", tempAttackSpc);
+                //SetChainInitial();
+                state = MoveState.Combat;
+
+                //animator.SetInteger("attackSpc", -1);
+            }
+            
+        }
         else if (state == MoveState.Combat)
         {
-            inCombat = true;
-            setInCombatTime();
+            //Debug.Log("IN COMBAT");
 
-            //Set Animator stuff here 
-
-            inCombat = false;
-
-            state = MoveState.Idle;
+            // If the player is in the middle of an attack
+            if (!animator.GetBool("completeAttack"))
+            {
+                targetSpeed = 0f;
+            }
+            else
+            {
+                Debug.Log("SHOULD RETURN TO IDLE FROM COMBAT");
+                animator.SetInteger("attackSpc", -1);
+                state = MoveState.Idle;
+            }
         }
 
         // Update the move speed using smoothing
@@ -201,16 +283,16 @@ public class PlayerController : MonoBehaviour {
         // Perform the actual movement
     //    controller.Move((velocity + transform.forward * movementSpeed) * Time.deltaTime);
 
-        //Calculate the smoothed speed and move the attached character controller
+        // Calculate the smoothed speed and move the attached character controller
 		currentSpeed = Mathf.SmoothDamp (currentSpeed, targetSpeed, ref movementSmoothVelocity, smoothing);
 		controller.Move((velocity + transform.forward * currentSpeed) * Time.deltaTime);
 
-        //Calculate target animations and set animator variables to affect animations if not currently attacking
+        // Calculate target animations and set animator variables to affect animations if not currently attacking
 		baseAnimationSpeed = ((running) ? 1 : .7f) * inputDirection.magnitude;
-        if (!inCombat)
-        {
+        //if (!inCombat)
+        //{
             animator.SetFloat("moveSpeed", baseAnimationSpeed, movementSmoothTime, Time.deltaTime);
-        }
+        //}
     }
 
     public void DisableMove()
@@ -223,19 +305,38 @@ public class PlayerController : MonoBehaviour {
         movementEnabled = true;
     }
 
-    public bool getTimeinCombat()
+    
+    // Return true if the player has dropped out of combat
+    public bool CombatDropped()
     {
         return (Time.time - inCombatStartTime) > inCombatDropoff;
     }
 
-    public void setInCombatTime()
+    public void SetCombatInitial()
     {
         inCombatStartTime = Time.time;
     }
 
-/*	public void DisableTurn()
-	{
-		inputDirection = new Vector3 (0, 0, 0);
-	} */
+    // Return true if attacks can't be chained
+    public bool ChainDropped()
+    {
+        return (Time.time - attackInitialTime) > attackChainDropoff;
+    }
+
+    public void SetChainInitial()
+    {
+        Debug.Log("SETTING CHAIN INITIAL");
+        attackInitialTime = Time.time;
+    }
+
+    public float GetChainInitial()
+    {
+        return attackInitialTime;
+    }
+
+    /*	public void DisableTurn()
+        {
+            inputDirection = new Vector3 (0, 0, 0);
+        } */
 }
 
