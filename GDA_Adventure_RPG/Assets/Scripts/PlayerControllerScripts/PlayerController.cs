@@ -74,6 +74,8 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
+        float thisFrame = Time.time;
+
         // Check at the beginning of the frame if the player is still in combat
         if (CombatDropped() && inCombat)
         {
@@ -87,7 +89,7 @@ public class PlayerController : MonoBehaviour {
         {
             //Debug.Log("Tree 1");
             //Debug.Log(tempAttackSpc + 1 == animator.GetInteger("animationSize"));
-            Debug.Log(ChainDropped());
+            //Debug.Log(ChainDropped());
 
             tempAttackSpc = -1;
             animator.SetInteger("attackSpc", -1);
@@ -216,8 +218,11 @@ public class PlayerController : MonoBehaviour {
                 animator.SetFloat("fallSpeed", velocity.y);
             }
         }
-        else if (state == MoveState.Attacking)
+        //Outside first if-else to allow single frame combat transitions
+        if (state == MoveState.Attacking)
         {
+            Debug.Log(Time.time == thisFrame);
+
             Debug.Log("ATTACKING");
 
             if (animator.GetInteger("currentWeapon") == 0)
@@ -249,7 +254,7 @@ public class PlayerController : MonoBehaviour {
             if (true)
             {
                 SetChainInitial();
-                Debug.Log(GetChainInitial());
+                //Debug.Log(GetChainInitial());
                 Debug.Log("Tree 2");
 
                 tempAttackSpc++;
